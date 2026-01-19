@@ -3,177 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RPRMD 2026</title>
+    <title>RPRMD Team Building 2026</title>
     <style>
-        :root { --primary: #ffffff; }
+        * { box-sizing: border-box; }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        body, html { height: 100%; overflow: hidden; background: #000; color: white; }
-
-        /* Video Background - 100% Clear & Visible */
-        #video-bg {
+        /* Full Screen Background Video */
+        #bg-video {
             position: fixed;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            z-index: -1;
-            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
             object-fit: cover;
         }
 
-        /* Top Minimal Countdown */
-        .top-timer {
+        /* Darkening the video slightly for text contrast */
+        .video-overlay {
             position: fixed;
-            top: 40px;
+            top: 0;
+            left: 0;
             width: 100%;
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
-            z-index: 10;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
         }
 
-        /* Floating Clear Glass Card at Bottom */
-        .bottom-card {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 380px;
-            /* Clear Glass Effect: High transparency, no blur */
-            background: rgba(0, 0, 0, 0.25); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center the card to see video top/bottom */
+            align-items: center;
             padding: 20px;
+        }
+
+        /* The Card - Dark/Black Background as requested */
+        .content-card {
+            background: rgba(0, 0, 0, 0.85); /* Black with slight transparency */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 350px;
             text-align: center;
-            z-index: 20;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.2s ease-in-out;
         }
 
-        .handle {
-            width: 40px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            margin: 0 auto 15px auto;
-        }
-
-        /* Small Thumbnail Box */
-        .thumb-box {
-            width: 70px;
-            height: 45px;
-            margin: 0 auto 15px auto;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Button Group */
-        .nav-stack { display: flex; gap: 10px; margin-bottom: 10px; }
-        
-        .action-btn {
-            flex: 1;
-            padding: 15px;
+        .attire-img {
+            width: 100%;
             border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.8rem;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin: 0 0 20px 0;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: 0.2s;
+        }
+
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: transform 0.2s;
         }
 
-        .action-btn.primary { background: white; color: black; }
-        .action-btn.secondary { 
-            background: rgba(0, 0, 0, 0.2); 
-            color: white; 
-            border: 1px solid rgba(255, 255, 255, 0.5); 
+        .btn-maps {
+            background: #fff;
+            color: #000;
         }
 
-        /* Status Text */
-        .status-tag { font-size: 0.65rem; opacity: 0.8; letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
-
-        /* Entry Modal */
-        #entry-modal {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: black; z-index: 100;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: 0.8s ease-in-out;
+        .btn-details {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
         }
-        #start-btn { 
-            padding: 15px 40px; border: 2px solid white; color: white; 
-            background: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer;
-            letter-spacing: 2px;
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .tap-hint {
+            color: #fff;
+            font-size: 0.75rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
 
-    <div id="entry-modal">
-        <h2 style="margin-bottom: 20px; letter-spacing: 3px;">RPRMD 2026</h2>
-        <button id="start-btn" onclick="startExperience()">ENTER SITE</button>
-    </div>
-
-    <video loop playsinline id="video-bg">
+    <video autoplay muted loop playsinline id="bg-video">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <audio id="bg-audio" loop>
-        <source src="your-audio-file.mp3" type="audio/mpeg">
-    </audio>
+    <div class="video-overlay"></div>
 
-    <div class="top-timer" id="timer-text">00d : 00h : 00m : 00s</div>
+    <div class="container">
+        <div class="content-card">
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
+            
+            <h1>RPRMD 2026</h1>
 
-    <div class="bottom-card">
-        <div class="handle"></div>
-        
-        <div class="thumb-box">
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire">
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="btn btn-maps">
+                📍 NAVIGATE TO LOCATION
+            </a>
+
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-details">
+                ℹ️ EVENT DETAILS
+            </a>
+
+            <div class="tap-hint" id="status">TAP TO ENABLE SOUND 🔊</div>
         </div>
-
-        <div class="nav-stack">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn primary">Maps</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">Details</a>
-        </div>
-
-        <div class="status-tag" id="status-text">Audio Inactive 🔇</div>
     </div>
 
     <script>
-        function startExperience() {
-            const modal = document.getElementById('entry-modal');
-            modal.style.opacity = '0';
-            setTimeout(() => { modal.style.display = 'none'; }, 800);
+        // Web browsers require a user gesture (click/tap) to play video audio
+        document.body.addEventListener('click', function() {
+            const video = document.getElementById('bg-video');
             
-            const vid = document.getElementById('video-bg');
-            const aud = document.getElementById('bg-audio');
-            vid.play();
-            aud.play();
-            document.getElementById('status-text').innerText = "Audio Active 🎵";
-        }
-
-        // Timer Logic
-        const target = new Date("March 15, 2026 08:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = target - now;
+            // Unmute the video itself
+            video.muted = false;
             
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            
-            document.getElementById('timer-text').innerText = 
-                `${d}d : ${h}h : ${m}m : ${s}s`;
-        }, 1000);
+            // Update UI
+            document.getElementById('status').innerHTML = "AUDIO ENABLED 🎵";
+            document.getElementById('status').style.animation = "none";
+        }, { once: true });
     </script>
+
 </body>
 </html>
