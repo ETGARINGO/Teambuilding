@@ -2,105 +2,169 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Building 2026 - RPRMD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RPRMD Team Building 2026</title>
     <style>
-        /* Full-screen Video Background */
+        * { box-sizing: border-box; }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevents awkward scrolling on mobile */
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Highlighting the Video */
         #bg-video {
             position: fixed;
-            right: 0;
-            bottom: 0;
+            top: 50%;
+            left: 50%;
             min-width: 100%;
             min-height: 100%;
+            width: auto;
+            height: auto;
             z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
             object-fit: cover;
         }
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: white;
-            overflow: hidden;
+        /* Dark gradient overlay to make text pop regardless of video brightness */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 0;
         }
 
-        .content-card {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 40px;
-            border-radius: 20px;
+        .main-content {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Pulls content to bottom for mobile ergonomics */
+            padding: 20px;
+            color: white;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            width: 90%;
-            max-width: 500px;
+        }
+
+        .attire-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
         }
 
         .attire-img {
             width: 100%;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.3);
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 15px 0 5px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
         }
 
         .btn {
-            display: block;
-            margin: 15px 0;
-            padding: 15px;
+            padding: 18px;
+            border-radius: 15px;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.2s, background 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn-primary {
-            background-color: #34a853; /* Google Green */
-            color: white;
+        .btn-maps {
+            background: #fff;
+            color: #000;
         }
 
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid white;
+        .btn-details {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+        .btn:active {
+            transform: scale(0.95);
+            opacity: 0.9;
         }
 
-        p { font-size: 0.9em; opacity: 0.8; }
+        .audio-hint {
+            font-size: 0.7rem;
+            margin-top: 15px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop id="bg-video">
+    <video autoplay muted loop playsinline id="bg-video">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
+
+    <div class="overlay"></div>
 
     <audio id="bg-audio" loop>
         <source src="your-audio-file.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="content-card">
-        <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
-        
-        <h2>Team Building 2026</h2>
-        
-        <a href="https://www.google.com/maps" class="btn btn-primary">📍 Open Google Maps</a>
-        
-        <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-secondary">View Event Details</a>
-        
-        <p>Click anywhere to enable audio 🎵</p>
+    <div class="main-content">
+        <div class="attire-card">
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
+            <h1>RPRMD 2026</h1>
+            
+            <div class="button-group">
+                <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="btn btn-maps">
+                    📍 Open Location Map
+                </a>
+                <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-details">
+                    ℹ️ Event Details
+                </a>
+            </div>
+            
+            <p class="audio-hint">Tap anywhere for sound 🔊</p>
+        </div>
     </div>
 
     <script>
-        // Start audio on first user interaction
+        // Critical for mobile: audio must trigger on touch
         document.body.addEventListener('click', function() {
             var audio = document.getElementById('bg-audio');
-            audio.play().catch(e => console.log("Audio play blocked"));
+            audio.play();
+            document.querySelector('.audio-hint').innerHTML = "Music Playing 🎵";
         }, { once: true });
     </script>
 
