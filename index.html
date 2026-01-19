@@ -2,172 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RPRMD 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPRMD Team Building 2026 - Navigate</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-
-        body, html { height: 100%; overflow: hidden; background: #000; color: white; }
-
-        /* Pure Background Video */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Video Background */
         #video-bg {
             position: fixed;
-            top: 50%; left: 50%;
+            right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
             z-index: -1;
-            transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
-        /* Fully Transparent Overlay */
         .overlay {
-            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 60px 20px;
-            text-align: center;
-            background: transparent;
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 300;
-        }
-
-        /* Clear Countdown Boxes */
-        #countdown { display: flex; gap: 8px; margin: 20px 0; }
-        .time-box {
-            background: rgba(255, 255, 255, 0.1); 
-            padding: 12px;
-            border-radius: 8px;
-            min-width: 70px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .time-box span { display: block; color: #fff; font-size: 1.5rem; font-weight: bold; }
-        .time-box label { font-size: 0.6rem; text-transform: uppercase; }
-
-        /* Minimal Navigation */
-        .nav-stack { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 12px; }
-        
-        .action-btn {
-            background: white;
-            color: black;
-            padding: 16px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
             justify-content: center;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
 
-        .action-btn.secondary { 
-            background: rgba(255, 255, 255, 0.1); 
-            color: white; 
-            border: 1px solid white; 
+        /* Countdown Style */
+        #countdown {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
         }
 
-        /* View Toggle Link */
-        .toggle-view {
-            margin-top: 15px;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            text-decoration: underline;
-            opacity: 0.7;
+        /* Navigation Cards */
+        .nav-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
         }
 
-        /* Restore Button */
-        #restore-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+        .card {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #fff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: none;
-            z-index: 200;
-            font-size: 0.7rem;
-            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            width: 300px;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: white;
         }
 
-        /* Entry Modal */
-        #entry-modal {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: #000; z-index: 300;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
         }
-        #start-btn { 
-            padding: 12px 35px; border: 1px solid #fff; color: #fff; 
-            background: none; border-radius: 4px; font-size: 1rem; cursor: pointer;
-            letter-spacing: 2px;
+
+        .card h2 { margin-bottom: 15px; }
+        .card p { font-size: 0.9rem; opacity: 0.8; }
+
+        .attire-section {
+            margin-top: 40px;
         }
+
+        .attire-img {
+            max-width: 250px;
+            border: 3px solid white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .btn-maps { background: #34a853; color: white; display: inline-block; margin-top: 15px; padding: 10px 20px; border-radius: 50px; font-weight: bold; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <div id="entry-modal">
-        <button id="start-btn" onclick="start()">ENTER</button>
-    </div>
-
-    <video loop playsinline id="video-bg">
+    <video autoplay muted loop id="video-bg">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="overlay" id="ui">
-        <div>
-            <h1>RPRMD 2026</h1>
-            <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 5px;">A Fresh Start</p>
-            
-            <div id="countdown">
-                <div class="time-box"><span id="days">00</span><label>Days</label></div>
-                <div class="time-box"><span id="hours">00</span><label>Hrs</label></div>
-                <div class="time-box"><span id="mins">00</span><label>Min</label></div>
-                <div class="time-box"><span id="secs">00</span><label>Sec</label></div>
-            </div>
+    <div class="overlay">
+        <h1>A Fresh Start for a Stronger RPRMD</h1>
+        <div id="countdown">Calculating...</div>
+
+        <div class="nav-container">
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="card">
+                <h2>📍 Location</h2>
+                <p>Open Google Maps to navigate to the event venue.</p>
+                <div class="btn-maps">Start Navigation</div>
+            </a>
+
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
+                <h2>ℹ️ Event Details</h2>
+                <p>View the full itinerary, guest list, and activities.</p>
+                <div class="btn-maps" style="background:#1877F2;">View Details</div>
+            </a>
         </div>
 
-        <div class="nav-stack">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">Navigation</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">Event Details</a>
-            <span class="toggle-view" onclick="view(true)">View Video</span>
+        <div class="attire-section">
+            <h3>Advise Attire</h3>
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
         </div>
+
+        <audio autoplay loop>
+            <source src="your-audio-file.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
-    <button id="restore-btn" onclick="view(false)">Show Menu</button>
-
     <script>
-        function start() {
-            document.getElementById('entry-modal').style.display = 'none';
-            document.getElementById('video-bg').play();
-        }
+        // Set your actual event date here
+        const countDownDate = new Date("March 15, 2026 08:00:00").getTime();
 
-        function view(hide) {
-            document.getElementById('ui').style.opacity = hide ? '0' : '1';
-            document.getElementById('ui').style.pointerEvents = hide ? 'none' : 'auto';
-            document.getElementById('restore-btn').style.display = hide ? 'block' : 'none';
-        }
-
-        const target = new Date("January 31, 2026 08:00:00").getTime();
-        
-        setInterval(() => {
+        const x = setInterval(function() {
             const now = new Date().getTime();
-            const diff = target - now;
-            document.getElementById('days').innerText = Math.max(0, Math.floor(diff / 86400000));
-            document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
-            document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
-            document.getElementById('secs').innerText = Math.max(0, Math.floor((diff % 60000) / 1000));
+            const distance = countDownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "EVENT LIVE";
+            }
         }, 1000);
     </script>
 </body>
