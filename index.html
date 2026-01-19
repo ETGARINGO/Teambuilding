@@ -2,136 +2,171 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPRMD Team Building 2026 - Navigate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RPRMD 2026</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --primary: #ffcc00; --glass: rgba(255, 255, 255, 0.15); }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+        body, html { height: 100%; overflow-x: hidden; background: #000; }
+
         /* Video Background */
         #video-bg {
             position: fixed;
-            right: 0; bottom: 0;
+            top: 50%; left: 50%;
             min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
             z-index: -1;
+            transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
+        /* Full Screen Overlay */
         .overlay {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
-            color: white;
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
         }
 
-        /* Countdown Style */
-        #countdown {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 30px;
-            color: #ffcc00;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
-
-        /* Navigation Cards */
-        .nav-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1000px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 20px;
-            width: 300px;
-            transition: transform 0.3s ease;
-            text-decoration: none;
+        /* Mobile Responsive Header */
+        h1 {
+            font-size: 1.8rem;
             color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
+        /* Dynamic Countdown */
+        #countdown {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
         }
-
-        .card h2 { margin-bottom: 15px; }
-        .card p { font-size: 0.9rem; opacity: 0.8; }
-
-        .attire-section {
-            margin-top: 40px;
+        .time-box {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 65px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+        .time-box span { display: block; color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+        .time-box label { font-size: 0.6rem; text-transform: uppercase; color: white; }
 
-        .attire-img {
-            max-width: 250px;
-            border: 3px solid white;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        /* Navigation Buttons */
+        .nav-stack { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; margin: 30px 0; }
+        
+        .action-btn {
+            background: white;
+            color: black;
+            padding: 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
+        .action-btn.secondary { background: var(--glass); color: white; border: 1px solid white; backdrop-filter: blur(5px); }
 
-        .btn-maps { background: #34a853; color: white; display: inline-block; margin-top: 15px; padding: 10px 20px; border-radius: 50px; font-weight: bold; text-decoration: none; }
+        /* Attire Image */
+        .attire-card {
+            background: var(--glass);
+            padding: 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+        .attire-card img { width: 100%; max-width: 280px; border-radius: 12px; }
+        .attire-card p { color: white; margin-top: 10px; font-size: 0.9rem; font-weight: bold; }
+
+        /* Entry Modal (Needed for Audio Autoplay) */
+        #entry-modal {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: black; z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; transition: 0.5s;
+        }
+        #start-btn { 
+            padding: 15px 40px; border: 2px solid var(--primary); color: var(--primary); 
+            background: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop id="video-bg">
+    <div id="entry-modal">
+        <h2 style="margin-bottom: 20px;">RPRMD TEAM BUILDING</h2>
+        <button id="start-btn" onclick="startExperience()">ENTER SITE</button>
+    </div>
+
+    <video loop playsinline id="video-bg">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
+    <audio id="bg-audio" loop>
+        <source src="your-audio-file.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="overlay">
-        <h1>A Fresh Start for a Stronger RPRMD</h1>
-        <div id="countdown">Calculating...</div>
+        <h1>A Fresh Start</h1>
+        <p style="color:white; opacity: 0.8;">for a Stronger RPRMD</p>
 
-        <div class="nav-container">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="card">
-                <h2>📍 Location</h2>
-                <p>Open Google Maps to navigate to the event venue.</p>
-                <div class="btn-maps">Start Navigation</div>
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span><label>Days</label></div>
+            <div class="time-box"><span id="hours">00</span><label>Hrs</label></div>
+            <div class="time-box"><span id="mins">00</span><label>Min</label></div>
+            <div class="time-box"><span id="secs">00</span><label>Sec</label></div>
+        </div>
+
+        <div class="nav-stack">
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">
+                📍 START NAVIGATION
             </a>
-
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
-                <h2>ℹ️ Event Details</h2>
-                <p>View the full itinerary, guest list, and activities.</p>
-                <div class="btn-maps" style="background:#1877F2;">View Details</div>
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">
+                📋 EVENT DETAILS
             </a>
         </div>
 
-        <div class="attire-section">
-            <h3>Advise Attire</h3>
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
+        <div class="attire-card">
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire">
+            <p>DRESS CODE: ADVISE ATTIRE</p>
         </div>
-
-        <audio autoplay loop>
-            <source src="your-audio-file.mp3" type="audio/mpeg">
-        </audio>
     </div>
 
     <script>
-        // Set your actual event date here
-        const countDownDate = new Date("March 15, 2026 08:00:00").getTime();
+        function startExperience() {
+            // Hide modal
+            document.getElementById('entry-modal').style.opacity = '0';
+            setTimeout(() => { document.getElementById('entry-modal').style.display = 'none'; }, 500);
+            
+            // Play Video & Audio
+            const vid = document.getElementById('video-bg');
+            const aud = document.getElementById('bg-audio');
+            vid.play();
+            aud.play();
+        }
 
-        const x = setInterval(function() {
+        // Countdown Logic
+        const target = new Date("March 15, 2026 08:00:00").getTime();
+        
+        setInterval(() => {
             const now = new Date().getTime();
-            const distance = countDownDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "EVENT LIVE";
-            }
+            const diff = target - now;
+            
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
     </script>
 </body>
