@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RPRMD 2026</title>
     <style>
-        :root { --primary: #ffffff; }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 
         body, html { height: 100%; overflow: hidden; background: #000; color: white; }
 
-        /* Full Screen Video - No overlays */
+        /* Full Screen Video - No Overlays */
         #video-bg {
             position: fixed;
             top: 50%; left: 50%;
@@ -22,7 +20,7 @@
             object-fit: cover;
         }
 
-        /* Overlay Container - Now transparent with no black gradient */
+        /* Overlay - Removed all gradients/black backgrounds */
         .overlay {
             height: 100vh;
             display: flex;
@@ -32,30 +30,32 @@
             padding: 60px 20px;
             text-align: center;
             transition: opacity 0.5s ease;
+            background: transparent; /* No black overlay */
         }
 
-        /* Header Styling */
         h1 {
             font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.8); /* Shadow keeps text readable over clear video */
         }
 
-        /* Countdown - Clear Glass Style (No Blur) */
+        /* Countdown - Clear Glass Style */
         #countdown { display: flex; gap: 8px; margin: 20px 0; }
         .time-box {
-            background: rgba(255, 255, 255, 0.1); 
+            background: rgba(255, 255, 255, 0.15); 
             padding: 12px;
             border-radius: 12px;
             min-width: 70px;
             border: 1px solid rgba(255,255,255,0.4);
+            /* No blur - perfectly clear */
         }
         .time-box span { display: block; color: #fff; font-size: 1.5rem; font-weight: bold; }
-        .time-box label { font-size: 0.6rem; text-transform: uppercase; }
+        .time-box label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Navigation Buttons */
+        /* Navigation Stack */
         .nav-stack { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 12px; }
+        
         .action-btn {
             background: white;
             color: black;
@@ -64,27 +64,30 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .action-btn.secondary { 
-            background: rgba(255, 255, 255, 0.1); 
+            background: rgba(255, 255, 255, 0.15); 
             color: white; 
             border: 1.5px solid white; 
         }
 
-        /* View Video Toggle Link */
+        /* Video Toggle */
         .toggle-view {
             margin-top: 15px;
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             cursor: pointer;
             text-decoration: underline;
-            opacity: 0.8;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
         }
 
-        /* Restore Button (Hidden by default) */
+        /* Restore Button */
         #restore-btn {
             position: fixed;
             bottom: 30px;
@@ -93,15 +96,16 @@
             background: rgba(255,255,255,0.2);
             border: 1px solid #fff;
             color: #fff;
-            padding: 10px 25px;
+            padding: 12px 25px;
             border-radius: 50px;
             display: none;
             z-index: 200;
             font-size: 0.8rem;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        /* Entry Modal */
+        /* Entry Modal - Keeping black only for the initial loader */
         #entry-modal {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: black; z-index: 300;
@@ -116,21 +120,18 @@
 <body>
 
     <div id="entry-modal">
-        <h2 style="margin-bottom: 20px; letter-spacing: 2px;">RPRMD TEAM BUILDING</h2>
+        <h2 style="margin-bottom: 20px; letter-spacing: 3px;">RPRMD 2026</h2>
         <button id="start-btn" onclick="startExperience()">ENTER SITE</button>
     </div>
 
     <video loop playsinline id="video-bg">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
-    <audio id="bg-audio" loop>
-        <source src="your-audio-file.mp3" type="audio/mpeg">
-    </audio>
 
     <div class="overlay" id="main-ui">
         <div>
             <h1>A Fresh Start</h1>
-            <p style="opacity: 0.8;">for a Stronger RPRMD</p>
+            <p style="opacity: 0.9; text-shadow: 1px 1px 10px #000;">for a Stronger RPRMD</p>
             
             <div id="countdown">
                 <div class="time-box"><span id="days">00</span><label>Days</label></div>
@@ -143,7 +144,7 @@
         <div class="nav-stack">
             <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">📍 START NAVIGATION</a>
             <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">📋 EVENT DETAILS</a>
-            <span class="toggle-view" onclick="toggleUI(true)">View Full Video</span>
+            <span class="toggle-view" onclick="toggleUI(true)">Full Video Mode</span>
         </div>
     </div>
 
@@ -153,19 +154,18 @@
         function startExperience() {
             document.getElementById('entry-modal').style.display = 'none';
             const vid = document.getElementById('video-bg');
-            const aud = document.getElementById('bg-audio');
             vid.play();
-            aud.play();
         }
 
-        // View Toggle Logic
         function toggleUI(hide) {
-            document.getElementById('main-ui').style.opacity = hide ? '0' : '1';
-            document.getElementById('main-ui').style.pointerEvents = hide ? 'none' : 'auto';
-            document.getElementById('restore-btn').style.display = hide ? 'block' : 'none';
+            const ui = document.getElementById('main-ui');
+            const restore = document.getElementById('restore-btn');
+            ui.style.opacity = hide ? '0' : '1';
+            ui.style.pointerEvents = hide ? 'none' : 'auto';
+            restore.style.display = hide ? 'block' : 'none';
         }
 
-        // Updated Target Date: Jan 31, 2026
+        // Target Date: January 31, 2026
         const target = new Date("January 31, 2026 08:00:00").getTime();
         
         setInterval(() => {
