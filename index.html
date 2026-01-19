@@ -7,10 +7,9 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 
-        /* Solid black base just for initial load, then transparent */
         body, html { height: 100%; overflow: hidden; background: #000; color: white; }
 
-        /* Full Screen Background Video */
+        /* Pure Background Video */
         #video-bg {
             position: fixed;
             top: 50%; left: 50%;
@@ -19,11 +18,9 @@
             z-index: -1;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0; /* Starts hidden to avoid "pop" */
-            transition: opacity 1s ease-in;
         }
 
-        /* Clear Overlay - No black gradients */
+        /* Fully Transparent Overlay */
         .overlay {
             height: 100vh;
             display: flex;
@@ -33,79 +30,105 @@
             padding: 60px 20px;
             text-align: center;
             background: transparent;
-            z-index: 10;
         }
 
         h1 {
             font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            font-weight: 300;
         }
 
-        /* Countdown Glass Boxes */
+        /* Clear Countdown Boxes */
         #countdown { display: flex; gap: 8px; margin: 20px 0; }
         .time-box {
-            background: rgba(255, 255, 255, 0.15); 
+            background: rgba(255, 255, 255, 0.1); 
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 8px;
             min-width: 70px;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
         }
         .time-box span { display: block; color: #fff; font-size: 1.5rem; font-weight: bold; }
-        .time-box label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; }
+        .time-box label { font-size: 0.6rem; text-transform: uppercase; }
 
+        /* Minimal Navigation */
         .nav-stack { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 12px; }
         
         .action-btn {
             background: white;
             color: black;
             padding: 16px;
-            border-radius: 50px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .action-btn.secondary { 
-            background: rgba(255, 255, 255, 0.15); 
+            background: rgba(255, 255, 255, 0.1); 
             color: white; 
-            border: 1.5px solid white; 
+            border: 1px solid white; 
         }
 
-        /* Entry Screen */
-        #entry-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 1000;
+        /* View Toggle Link */
+        .toggle-view {
+            margin-top: 15px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+
+        /* Restore Button */
+        #restore-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: none;
+            z-index: 200;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        /* Entry Modal */
+        #entry-modal {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: #000; z-index: 300;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease;
         }
-
         #start-btn { 
-            padding: 15px 40px; border: 2px solid #fff; color: #fff; 
-            background: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
+            padding: 12px 35px; border: 1px solid #fff; color: #fff; 
+            background: none; border-radius: 4px; font-size: 1rem; cursor: pointer;
             letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div id="entry-screen">
-        <h2 style="margin-bottom: 25px; letter-spacing: 4px;">RPRMD 2026</h2>
-        <button id="start-btn" onclick="initPage()">EXPLORE</button>
+    <div id="entry-modal">
+        <button id="start-btn" onclick="start()">ENTER</button>
     </div>
 
-    <video loop playsinline preload="auto" id="video-bg">
+    <video loop playsinline id="video-bg">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="overlay" id="ui-container">
+    <div class="overlay" id="ui">
         <div>
-            <h1>A Fresh Start</h1>
-            <p style="opacity: 0.9; text-shadow: 1px 1px 10px #000;">for a Stronger RPRMD</p>
+            <h1>RPRMD 2026</h1>
+            <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 5px;">A Fresh Start</p>
             
             <div id="countdown">
                 <div class="time-box"><span id="days">00</span><label>Days</label></div>
@@ -116,48 +139,36 @@
         </div>
 
         <div class="nav-stack">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">📍 START NAVIGATION</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">📋 EVENT DETAILS</a>
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">Navigation</a>
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">Event Details</a>
+            <span class="toggle-view" onclick="view(true)">View Video</span>
         </div>
     </div>
 
+    <button id="restore-btn" onclick="view(false)">Show Menu</button>
+
     <script>
-        // Set Target Date: Jan 31, 2026
-        const targetDate = new Date("January 31, 2026 08:00:00").getTime();
-
-        function initPage() {
-            // Hide Entry Screen
-            const entry = document.getElementById('entry-screen');
-            entry.style.opacity = '0';
-            setTimeout(() => entry.style.display = 'none', 800);
-
-            // Play Video
-            const vid = document.getElementById('video-bg');
-            vid.style.opacity = '1';
-            vid.play().catch(error => {
-                console.log("Video failed to auto-play: ", error);
-            });
-            
-            // Start Timer
-            startTimer();
+        function start() {
+            document.getElementById('entry-modal').style.display = 'none';
+            document.getElementById('video-bg').play();
         }
 
-        function startTimer() {
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = targetDate - now;
-                
-                document.getElementById('days').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-                document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-                document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-                document.getElementById('secs').innerText = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
-            }, 1000);
+        function view(hide) {
+            document.getElementById('ui').style.opacity = hide ? '0' : '1';
+            document.getElementById('ui').style.pointerEvents = hide ? 'none' : 'auto';
+            document.getElementById('restore-btn').style.display = hide ? 'block' : 'none';
         }
 
-        // Pre-load check
-        window.onload = () => {
-            console.log("Assets Loaded - Ready for Video");
-        };
+        const target = new Date("January 31, 2026 08:00:00").getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            document.getElementById('days').innerText = Math.max(0, Math.floor(diff / 86400000));
+            document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
+            document.getElementById('mins').innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
+            document.getElementById('secs').innerText = Math.max(0, Math.floor((diff % 60000) / 1000));
+        }, 1000);
     </script>
 </body>
 </html>
