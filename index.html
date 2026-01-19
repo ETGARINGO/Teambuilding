@@ -16,7 +16,7 @@
             color: white;
         }
 
-        /* Video Background - No Blur, 100% Clear */
+        /* Video Background - Full Clarity */
         #bg-video {
             position: fixed;
             top: 0; left: 0;
@@ -28,49 +28,51 @@
         /* Top Minimal Countdown */
         .top-timer {
             position: fixed;
-            top: 40px;
+            top: 30px;
             width: 100%;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 400;
             letter-spacing: 2px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.9);
             z-index: 10;
         }
 
-        /* Floating Clear Glass Card at Bottom */
+        /* Minimized Clear Glass Card */
         .bottom-card {
             position: fixed;
-            bottom: 40px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 420px;
-            /* Clear Glass: No blur, high transparency */
-            background: rgba(0, 0, 0, 0.25); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 35px;
-            padding: 25px;
+            width: 85%;
+            max-width: 360px;
+            /* Ultra-transparent background */
+            background: rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 25px;
+            padding: 15px 20px;
             text-align: center;
             z-index: 20;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
+        /* Tiny Drag Handle */
         .handle {
-            width: 45px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.4);
+            width: 35px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 12px auto;
         }
 
+        /* Minimized Thumbnail */
         .thumb-box {
-            width: 80px;
-            height: 50px;
-            margin: 0 auto 20px auto;
-            border-radius: 10px;
+            width: 50px;
+            height: 35px;
+            margin: 0 auto 12px auto;
+            border-radius: 6px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .thumb-box img {
@@ -79,47 +81,45 @@
             object-fit: cover;
         }
 
+        /* Compact Button Group */
         .button-group {
             display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .btn {
             flex: 1;
-            padding: 16px;
-            border-radius: 14px;
+            padding: 12px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.2s;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s ease;
         }
 
-        /* Maps Button */
         .btn-white {
             background: #ffffff;
             color: #000000;
         }
 
-        /* Details Button */
         .btn-outline {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
             color: #ffffff;
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .btn:active {
-            transform: scale(0.94);
+            transform: scale(0.96);
         }
 
         .audio-tag {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             opacity: 0.8;
-            font-weight: 500;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
     </style>
@@ -144,25 +144,34 @@
             <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-outline">Details</a>
         </div>
 
-        <div class="audio-tag" id="status">Tap anywhere for sound 🔊</div>
+        <div class="audio-tag" id="status">Audio Inactive 🔇</div>
     </div>
 
     <script>
-        // Timer Logic
-        const eventTime = new Date("January 30, 2026 08:00:00").getTime();
+        // Set your specific event time here
+        const target = new Date("January 30, 2026 08:00:00").getTime();
+
         const updateTimer = () => {
             const now = new Date().getTime();
-            const diff = eventTime - now;
+            const diff = target - now;
+            
+            if (diff < 0) {
+                document.getElementById('timer').innerText = "EVENT LIVE";
+                return;
+            }
+
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
+            
             document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
         };
+        
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Audio Activation
+        // One-tap Audio Activation
         document.body.addEventListener('click', () => {
             const video = document.getElementById('bg-video');
             video.muted = false;
