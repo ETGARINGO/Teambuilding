@@ -2,182 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RPRMD 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Building 2026</title>
     <style>
-        * { box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            background-color: #000;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: white;
-        }
-
-        /* Full Background Video */
-        #bg-video {
+        /* Video Background */
+        #video-bg {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
             z-index: -1;
             object-fit: cover;
         }
 
-        /* Top Minimal Countdown */
-        .top-timer {
-            position: fixed;
-            top: 40px;
-            width: 100%;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
-            z-index: 10;
-        }
-
-        /* Floating Transparent Card at Bottom */
-        .bottom-card {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 420px;
-            background: rgba(0, 0, 0, 0.35); /* High transparency */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 35px;
-            padding: 25px;
-            text-align: center;
-            z-index: 20;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        /* Handle bar at the top of the card */
-        .handle {
-            width: 45px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            margin: 0 auto 20px auto;
-        }
-
-        /* Small Thumbnail */
-        .thumb-box {
-            width: 80px;
-            height: 50px;
-            margin: 0 auto 20px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .thumb-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Button Layout from Screenshot */
-        .button-group {
+        .container {
             display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.5); /* Overlay to make text readable */
+            color: white;
+            padding: 20px;
         }
 
-        .btn {
-            flex: 1;
-            padding: 16px;
-            border-radius: 14px;
+        /* Countdown Style */
+        #countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Form Container */
+        .form-wrapper {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+
+        .attire-img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-info {
+            background: #1877F2;
+            color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* White Button (Maps) */
-        .btn-white {
-            background: #ffffff;
-            color: #000000;
-        }
-
-        /* Transparent Outline Button (Details) */
-        .btn-outline {
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .btn:active {
-            transform: scale(0.94);
-            opacity: 0.8;
-        }
-
-        .audio-tag {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            opacity: 0.6;
-            font-weight: 500;
+            border-radius: 5px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop playsinline id="bg-video">
+    <video autoplay muted loop id="video-bg">
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="top-timer" id="timer">00d : 00h : 00m : 00s</div>
+    <div class="container">
+        <h1>A Fresh Start for a Stronger RPRMD</h1>
+        
+        <div id="countdown">Loading Countdown...</div>
 
-    <div class="bottom-card">
-        <div class="handle"></div>
-        
-        <div class="thumb-box">
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire">
-        </div>
-        
-        <div class="button-group">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="btn btn-white">Maps</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-outline">Details</a>
+        <div class="form-wrapper">
+            <iframe src="https://script.google.com/macros/s/AKfycbwEXGS7hpbp6OwmrsxwYAPNorfK7pTsF3etaJg_kYMdLqswDXvFBzFKuR8F1WQ81eqBzA/exec"></iframe>
         </div>
 
-        <div class="audio-tag" id="status">Audio Active 🎵</div>
+        <a href="https://sites.google.com/view/teambuilding2026/home" target="_blank" class="btn-info">View Event Details</a>
+
+        <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
+
+        <audio autoplay loop>
+            <source src="your-audio-file.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <script>
-        // --- TIMER LOGIC ---
-        const eventTime = new Date("January 30, 2026 08:00:00").getTime();
-        
-        const updateTimer = () => {
+        // Set the date we're counting down to
+        const countDownDate = new Date("Jan 1, 2026 09:00:00").getTime();
+
+        const x = setInterval(function() {
             const now = new Date().getTime();
-            const diff = eventTime - now;
-            
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('timer').innerHTML = 
-                `${d}d : ${h}h : ${m}m : ${s}s`;
-        };
-        
-        setInterval(updateTimer, 1000);
-        updateTimer();
+            const distance = countDownDate - now;
 
-        // --- AUDIO TOGGLE ---
-        document.body.addEventListener('click', () => {
-            const video = document.getElementById('bg-video');
-            video.muted = false;
-            document.getElementById('status').innerHTML = "Audio Playing 🎵";
-        }, { once: true });
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "THE EVENT HAS STARTED!";
+            }
+        }, 1000);
     </script>
-
 </body>
 </html>
