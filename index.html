@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Building 2026 - RPRMD</title>
     <style>
-        /* Video Background Styling */
+        /* Full-screen Video Background */
         #bg-video {
             position: fixed;
             right: 0;
@@ -18,49 +18,60 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
             color: white;
+            overflow: hidden;
         }
 
-        .container {
-            background: rgba(0, 0, 0, 0.7); /* Dark overlay for readability */
-            margin: 50px 0;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 800px;
+        .content-card {
+            background: rgba(0, 0, 0, 0.75);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-        }
-
-        /* Form Embed Styling */
-        iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            border-radius: 10px;
-            background-color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            width: 90%;
+            max-width: 500px;
         }
 
         .attire-img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 20px;
-            border: 2px solid #fff;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .btn-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            background-color: #007bff;
-            color: white;
+        .btn {
+            display: block;
+            margin: 15px 0;
+            padding: 15px;
             text-decoration: none;
-            border-radius: 5px;
             font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s, background 0.3s;
         }
+
+        .btn-primary {
+            background-color: #34a853; /* Google Green */
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        p { font-size: 0.9em; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -73,24 +84,23 @@
         <source src="your-audio-file.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="container">
-        <h1>A Fresh Start for a Stronger RPRMD</h1>
-        
+    <div class="content-card">
         <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
-
-        <p>Please fill out the form below to register.</p>
-
-        <iframe src="https://script.google.com/macros/s/AKfycbwEXGS7hpbp6OwmrsxwYAPNorfK7pTsF3etaJg_kYMdLqswDXvFBzFKuR8F1WQ81eqBzA/exec?page=index"></iframe>
-
-        <br>
-        <a href="https://sites.google.com/view/teambuilding2026/home" class="btn-link">View Event Details</a>
+        
+        <h2>Team Building 2026</h2>
+        
+        <a href="https://www.google.com/maps" class="btn btn-primary">📍 Open Google Maps</a>
+        
+        <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-secondary">View Event Details</a>
+        
+        <p>Click anywhere to enable audio 🎵</p>
     </div>
 
     <script>
-        // Unmute audio on first click anywhere on the page
+        // Start audio on first user interaction
         document.body.addEventListener('click', function() {
             var audio = document.getElementById('bg-audio');
-            audio.play();
+            audio.play().catch(e => console.log("Audio play blocked"));
         }, { once: true });
     </script>
 
