@@ -35,27 +35,27 @@
         /* Top Minimal Timer */
         .top-timer {
             position: fixed;
-            top: 30px;
+            top: 40px;
             width: 100%;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 400;
             letter-spacing: 2px;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
             z-index: 10;
         }
 
         /* Clear Glass Minimal Card */
         .bottom-card {
             position: fixed;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 85%;
+            width: 88%;
             max-width: 360px;
             background: rgba(0, 0, 0, 0.3); /* Clear glass, no blur */
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
+            border-radius: 30px;
             padding: 20px;
             text-align: center;
             z-index: 20;
@@ -77,48 +77,50 @@
 
         .btn {
             flex: 1;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 15px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 700;
             font-size: 0.8rem;
             text-transform: uppercase;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-white { background: #fff; color: #000; }
-        .btn-outline { background: rgba(0,0,0,0.2); color: #fff; border: 1px solid #fff; }
+        .btn-outline { background: rgba(0,0,0,0.1); color: #fff; border: 1px solid #fff; }
 
         /* Toggle Button Styles */
         .toggle-view-btn {
             background: none;
             border: none;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.7);
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             cursor: pointer;
             text-decoration: underline;
-            margin-top: 5px;
         }
 
-        /* Back Button - Only shows when UI is hidden */
+        /* Floating Restore Button - Subtle */
         #show-ui-btn {
             position: fixed;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.4);
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 50px;
             z-index: 100;
             font-size: 0.7rem;
             font-weight: bold;
             letter-spacing: 1px;
-            backdrop-filter: blur(5px);
-            display: none; /* Hidden by default */
+            display: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -128,7 +130,7 @@
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="top-timer ui-element" id="timer">00d : 00h : 00m : 00s</div>
+    <div class="top-timer ui-element" id="timer-text">00d : 00h : 00m : 00s</div>
 
     <div class="bottom-card ui-element" id="main-card">
         <div class="thumb-box">
@@ -146,7 +148,10 @@
     <button id="show-ui-btn" onclick="toggleUI(false)">SHOW BUTTONS</button>
 
     <script>
-        // Toggle Logic
+        // Set the Target Event Date: Jan 31, 2026
+        const eventDate = new Date("January 31, 2026 08:00:00").getTime();
+
+        // UI Toggle Logic
         function toggleUI(hide) {
             const elements = document.querySelectorAll('.ui-element');
             const showBtn = document.getElementById('show-ui-btn');
@@ -159,19 +164,26 @@
             showBtn.style.display = hide ? 'block' : 'none';
         }
 
-        // Timer Logic
-        const target = new Date("March 15, 2026 08:00:00").getTime();
+        // Countdown Timer Logic
         setInterval(() => {
             const now = new Date().getTime();
-            const diff = target - now;
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
+            const diff = eventDate - now;
+
+            if (diff < 0) {
+                document.getElementById('timer-text').innerText = "EVENT LIVE";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('timer-text').innerText = 
+                `${d}d : ${h}h : ${m}m : ${s}s`;
         }, 1000);
 
-        // Click anywhere to play audio (standard browser requirement)
+        // Standard unmute logic on first click
         document.body.addEventListener('click', function() {
             const video = document.getElementById('bg-video');
             video.muted = false;
