@@ -9,176 +9,200 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #000;
+            background-color: #0a0a0a;
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Video Background Fixes */
-        .video-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2; /* Keeps video behind everything */
-            overflow: hidden;
-        }
-
+        /* Luxury Background Video */
         #video-bg {
-            min-width: 100%; 
-            min-height: 100%;
-            width: auto; height: auto;
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            position: fixed;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2;
             object-fit: cover;
+            filter: brightness(0.4) contrast(1.1);
         }
 
-        /* Contrast Overlay */
         .overlay {
-            position: relative;
-            z-index: 1; /* Ensures text is above video */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
             padding: 40px 20px;
             text-align: center;
         }
 
-        /* Luxury Audio Controls */
-        .audio-control {
+        /* AUDIO CONTROL BUTTON */
+        .audio-toggle {
             position: fixed;
-            top: 30px;
-            right: 30px;
+            top: 20px;
+            right: 20px;
             z-index: 100;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1px solid rgba(212, 175, 55, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.4);
             color: #d4af37;
+            padding: 10px 15px;
+            cursor: pointer;
             font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: 0.3s;
+            border-radius: 2px;
         }
 
-        .audio-control:hover { background: rgba(212, 175, 55, 0.2); }
+        .audio-toggle:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
 
-        /* Typography & UI */
+        /* Typography */
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: 3.5rem;
             letter-spacing: 2px;
             margin-bottom: 10px;
             background: linear-gradient(to bottom, #ffffff 0%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
 
         #countdown {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            margin: 30px 0 50px 0;
+            font-size: 3rem;
+            margin-bottom: 50px;
             color: #d4af37;
             border-top: 1px solid rgba(212, 175, 55, 0.3);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             padding: 15px 40px;
+            display: inline-block;
         }
 
-        .nav-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .nav-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1100px;
+        }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 40px 30px;
             width: 320px;
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none;
             color: white;
-            transition: 0.4s;
         }
 
-        .card:hover { border-color: #d4af37; transform: translateY(-5px); }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
 
-        .btn-luxury {
-            margin-top: 20px;
+        .btn-luxury { 
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             border: 1px solid #d4af37;
             color: #d4af37;
-            padding: 10px 20px;
+            padding: 12px 24px;
             display: inline-block;
-            font-size: 0.8rem;
         }
 
         .attire-img {
-            margin-top: 30px;
-            max-width: 200px;
-            border: 1px solid #d4af37;
-            filter: grayscale(20%);
+            max-width: 220px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            #countdown { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="audio-control" onclick="toggleAudio()" id="audio-status">
-        Music: Off
-    </div>
+    <button class="audio-toggle" onclick="toggleAudio()" id="audioBtn">Sound: Off</button>
 
-    <div class="video-container">
-        <video autoplay muted loop id="video-bg" playsinline>
-            <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
-        </video>
-    </div>
+    <video autoplay muted loop id="video-bg" playsinline>
+        <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
+    </video>
 
     <div class="overlay">
-        <p style="letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 20px; opacity: 0.7;">JANUARY 31, 2026</p>
+        <p class="subtitle">You are cordially invited to</p>
         <h1>A Fresh Start for a Stronger RPRMD</h1>
         
         <div id="countdown">Calculating...</div>
 
         <div class="nav-container">
             <a href="https://maps.google.com" class="card">
-                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Location</h2>
-                <p style="font-size: 0.8rem; opacity: 0.7;">Navigate to the curated venue selected for our 2026 assembly.</p>
-                <div class="btn-luxury">View Map</div>
+                <h2>The Venue</h2>
+                <p>Experience excellence in a curated setting. Click to view the location and map directions.</p>
+                <div class="btn-luxury">Explore Map</div>
             </a>
+
             <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
-                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Itinerary</h2>
-                <p style="font-size: 0.8rem; opacity: 0.7;">Explore the journey we have planned for the team.</p>
-                <div class="btn-luxury">Details</div>
+                <h2>The Itinerary</h2>
+                <p>A comprehensive guide to our sessions, guest experiences, and formal schedule.</p>
+                <div class="btn-luxury">Event Details</div>
             </a>
         </div>
 
         <div class="attire-section">
-            <h3 style="font-family: 'Playfair Display'; margin-top: 40px; font-style: italic;">Advise Attire</h3>
+            <h3 style="font-family: 'Playfair Display'; font-style: italic; margin-top: 40px;">The Dress Code</h3>
             <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
         </div>
 
-        <audio id="bg-audio" loop>
+        <audio id="bg-music" loop>
             <source src="your-audio-file.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
-        // Audio Toggle Function
-        const audio = document.getElementById("bg-audio");
-        const audioBtn = document.getElementById("audio-status");
+        const music = document.getElementById("bg-music");
+        const audioBtn = document.getElementById("audioBtn");
 
+        // Function to toggle music manually
         function toggleAudio() {
-            if (audio.paused) {
-                audio.play();
-                audioBtn.innerHTML = "Music: On";
+            if (music.paused) {
+                music.play();
+                audioBtn.innerText = "Sound: On";
             } else {
-                audio.pause();
-                audioBtn.innerHTML = "Music: Off";
+                music.pause();
+                audioBtn.innerText = "Sound: Off";
             }
         }
 
-        // Countdown for January 31, 2026
+        // Luxury touch: Try to play audio when the user clicks anywhere on the page
+        document.body.addEventListener('click', function() {
+            if (music.paused && audioBtn.innerText === "Sound: Off") {
+                // We don't force it here to respect user choice, 
+                // but you can uncomment the next lines to force play on first click:
+                // music.play();
+                // audioBtn.innerText = "Sound: On";
+            }
+        }, { once: true });
+
+        // Countdown Logic
         const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
@@ -188,11 +212,12 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("countdown").innerHTML = 
+                days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s";
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "EVENT LIVE";
+                document.getElementById("countdown").innerHTML = "THE EVENT COMMENCES";
             }
         }, 1000);
     </script>
