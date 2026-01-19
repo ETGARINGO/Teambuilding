@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RPRMD 2026</title>
+    <title>Team Building 2026 - RPRMD</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-        body, html { height: 100%; overflow: hidden; background: #000; color: white; }
+        body, html { height: 100%; overflow: hidden; background-color: #000; color: white; }
 
-        /* Full Screen Clear Video Background */
+        /* Full-screen Video Background - 100% Clear */
         #bg-video {
             position: fixed;
             top: 50%; left: 50%;
@@ -20,113 +20,99 @@
             object-fit: cover;
         }
 
-        /* UI elements with no background overlays */
-        .ui-element {
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .ui-hidden {
-            opacity: 0 !important;
-            visibility: hidden !important;
-        }
-
-        /* Top Minimal Timer - No dark shade */
+        /* Top Countdown Timer */
         .top-timer {
             position: fixed;
-            top: 50px;
+            top: 40px;
             width: 100%;
             text-align: center;
             font-size: 1.5rem;
             font-weight: 500;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.8); /* Shadow helps text stay visible over bright video */
+            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
             z-index: 10;
+            transition: opacity 0.5s;
         }
 
-        /* 100% Transparent Card - No Black/Grey background */
-        .bottom-card {
+        /* The Content Card - Clear Glass Style */
+        .content-card {
             position: fixed;
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 380px;
-            background: rgba(255, 255, 255, 0.05); /* Nearly invisible clear glass */
-            border: 1px solid rgba(255, 255, 255, 0.4); /* Stronger white border to define the shape */
-            border-radius: 30px;
+            max-width: 400px;
+            /* No black background, just a subtle glass tint and border */
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.4);
             padding: 25px;
+            border-radius: 30px;
             text-align: center;
             z-index: 20;
-            backdrop-filter: none; /* Removed blur for perfect clarity */
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .thumb-box {
+        .attire-img {
             width: 70px;
             height: 45px;
-            margin: 0 auto 20px auto;
+            object-fit: cover;
             border-radius: 8px;
-            overflow: hidden;
+            margin-bottom: 15px;
             border: 1px solid rgba(255,255,255,0.5);
         }
 
-        .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .button-group { display: flex; gap: 12px; margin-bottom: 15px; }
+        /* Buttons Layout */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
         .btn {
             flex: 1;
-            padding: 16px;
-            border-radius: 14px;
+            padding: 15px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .btn-primary { background: #fff; color: #000; }
+        .btn-secondary { background: rgba(0,0,0,0.1); color: #fff; border: 1px solid #fff; }
+
+        /* Toggle Text */
+        .toggle-text {
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Solid white for contrast */
-        .btn-white { background: #fff; color: #000; }
-        
-        /* Transparent button for clarity */
-        .btn-outline { 
-            background: rgba(255, 255, 255, 0.1); 
-            color: #fff; 
-            border: 1.5px solid #fff; 
-        }
-
-        .toggle-view-btn {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
             text-decoration: underline;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            opacity: 0.8;
         }
 
-        /* Subtle button to bring UI back */
-        #show-ui-btn {
+        /* Classes for Toggling */
+        .hidden-ui {
+            opacity: 0 !important;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(20px);
+        }
+
+        /* Restore Button - subtle and small */
+        #restore-btn {
             position: fixed;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.2);
+            border: 1px solid #fff;
             color: #fff;
-            padding: 12px 28px;
+            padding: 8px 20px;
             border-radius: 50px;
-            z-index: 100;
-            font-size: 0.75rem;
-            font-weight: bold;
+            font-size: 0.7rem;
             display: none;
+            z-index: 100;
             cursor: pointer;
         }
     </style>
@@ -137,63 +123,60 @@
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="top-timer ui-element" id="timer-display">00d : 00h : 00m : 00s</div>
+    <div class="top-timer" id="timer">00d : 00h : 00m : 00s</div>
 
-    <div class="bottom-card ui-element" id="main-ui">
-        <div class="thumb-box">
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire">
+    <div class="content-card" id="main-card">
+        <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire" class="attire-img">
+        
+        <div class="btn-row">
+            <a href="https://www.google.com/maps" class="btn btn-primary">📍 Maps</a>
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-secondary">Details</a>
         </div>
         
-        <div class="button-group">
-            <a href="https://www.google.com/maps" class="btn btn-white">Maps</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-outline">Details</a>
-        </div>
-
-        <button class="toggle-view-btn" onclick="toggleInterface(true)">Full Video Mode</button>
+        <p class="toggle-text" onclick="toggleView(true)">View Full Video</p>
     </div>
 
-    <button id="show-ui-btn" onclick="toggleInterface(false)">BACK TO INFO</button>
+    <button id="restore-btn" onclick="toggleView(false)">Show Details</button>
 
     <script>
-        // Set the Target Event Date: Jan 31, 2026
-        const eventDay = new Date("January 31, 2026 08:00:00").getTime();
+        // Set Date to January 31, 2026
+        const eventDate = new Date("January 31, 2026 08:00:00").getTime();
 
-        // Interface Hide/Show
-        function toggleInterface(hide) {
-            const uiElements = document.querySelectorAll('.ui-element');
-            const showBtn = document.getElementById('show-ui-btn');
-            
-            uiElements.forEach(el => {
-                if (hide) el.classList.add('ui-hidden');
-                else el.classList.remove('ui-hidden');
-            });
-
-            showBtn.style.display = hide ? 'block' : 'none';
-        }
-
-        // Timer Update
-        setInterval(() => {
+        function updateTimer() {
             const now = new Date().getTime();
-            const diff = eventDay - now;
-
-            if (diff < 0) {
-                document.getElementById('timer-display').innerText = "EVENT IS LIVE";
-                return;
-            }
+            const diff = eventDate - now;
 
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            document.getElementById('timer-display').innerText = 
-                `${d}d : ${h}h : ${m}m : ${s}s`;
-        }, 1000);
+            document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
+        }
 
-        // Unmute on Tap
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Toggle Function
+        function toggleView(hide) {
+            const card = document.getElementById('main-card');
+            const timer = document.getElementById('timer');
+            const restore = document.getElementById('restore-btn');
+
+            if(hide) {
+                card.classList.add('hidden-ui');
+                timer.classList.add('hidden-ui');
+                restore.style.display = 'block';
+            } else {
+                card.classList.remove('hidden-ui');
+                timer.classList.remove('hidden-ui');
+                restore.style.display = 'none';
+            }
+        }
+
+        // Unmute on first click
         document.body.addEventListener('click', function() {
-            const video = document.getElementById('bg-video');
-            video.muted = false;
+            document.getElementById('bg-video').muted = false;
         }, { once: true });
     </script>
 
