@@ -3,134 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPRMD Team Building 2026 - Navigate</title>
+    <title>RPRMD | Grand Team Building 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Video Background */
+        body {
+            background-color: #0a0a0a;
+            color: #f4f4f4;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Background Video */
         #video-bg {
             position: fixed;
             right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
-            z-index: -1;
+            z-index: -2;
             object-fit: cover;
+            filter: brightness(0.4) contrast(1.1);
         }
 
+        /* Subtle Gradient Overlay */
         .overlay {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
-            color: white;
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            padding: 40px 20px;
             text-align: center;
-            padding: 20px;
         }
 
-        /* Countdown Style */
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #ffffff 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Luxury Countdown */
         #countdown {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 30px;
-            color: #ffcc00;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: #d4af37; /* Champagne Gold */
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 15px 40px;
+            display: inline-block;
         }
 
         /* Navigation Cards */
         .nav-container {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 1000px;
+            max-width: 1100px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 20px;
-            width: 300px;
-            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 4px; /* Sharper corners for a modern luxury look */
+            width: 320px;
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none;
             color: white;
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
         }
 
-        .card h2 { margin-bottom: 15px; }
-        .card p { font-size: 0.9rem; opacity: 0.8; }
+        .card h2 { 
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px; 
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
 
+        .card p { 
+            font-size: 0.85rem; 
+            opacity: 0.6; 
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn-luxury { 
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 12px 24px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .card:hover .btn-luxury {
+            background: #d4af37;
+            color: #000;
+        }
+
+        /* Attire Section */
         .attire-section {
-            margin-top: 40px;
+            margin-top: 60px;
+        }
+
+        .attire-section h3 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         .attire-img {
-            max-width: 250px;
-            border: 3px solid white;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            max-width: 220px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s;
+        }
+        
+        .attire-img:hover {
+            transform: scale(1.05);
         }
 
-        .btn-maps { background: #34a853; color: white; display: inline-block; margin-top: 15px; padding: 10px 20px; border-radius: 50px; font-weight: bold; text-decoration: none; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            #countdown { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop id="video-bg">
+    <video autoplay muted loop id="video-bg" playsinline>
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
     <div class="overlay">
+        <p class="subtitle">You are cordially invited to</p>
         <h1>A Fresh Start for a Stronger RPRMD</h1>
+        
         <div id="countdown">Calculating...</div>
 
         <div class="nav-container">
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="card">
-                <h2>📍 Location</h2>
-                <p>Open Google Maps to navigate to the event venue.</p>
-                <div class="btn-maps">Start Navigation</div>
+            <a href="https://maps.google.com" class="card">
+                <h2>The Venue</h2>
+                <p>Experience excellence in a curated setting. Click to view the location and map directions.</p>
+                <div class="btn-luxury">Explore Map</div>
             </a>
 
             <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
-                <h2>ℹ️ Event Details</h2>
-                <p>View the full itinerary, guest list, and activities.</p>
-                <div class="btn-maps" style="background:#1877F2;">View Details</div>
+                <h2>The Itinerary</h2>
+                <p>A comprehensive guide to our sessions, guest experiences, and formal schedule.</p>
+                <div class="btn-luxury">Event Details</div>
             </a>
         </div>
 
         <div class="attire-section">
-            <h3>Advise Attire</h3>
+            <h3>The Dress Code</h3>
             <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
         </div>
 
-        <audio autoplay loop>
+        <audio id="bg-music" loop>
             <source src="your-audio-file.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
-        // Set your actual event date here
-        const countDownDate = new Date("March 15, 2026 08:00:00").getTime();
+        // Updated Event Date: January 31, 2026
+        const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
 
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("countdown").innerHTML = 
+                days + "<span>d</span> : " + hours + "<span>h</span> : " + minutes + "<span>m</span> : " + seconds + "<span>s</span>";
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "EVENT LIVE";
+                document.getElementById("countdown").innerHTML = "THE EVENT COMMENCES";
             }
         }, 1000);
     </script>
