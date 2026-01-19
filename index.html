@@ -13,7 +13,7 @@
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: pointer; /* Indicates the page is interactive */
+            cursor: pointer;
         }
 
         /* Luxury Background Video */
@@ -115,24 +115,42 @@
             transition: 0.4s;
         }
 
+        /* Modal Styles */
+        #itinerary-modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000;
+            left: 0; top: 0; 
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        
+        .modal-content {
+            position: relative; 
+            margin: auto; 
+            top: 5vh;
+            width: 90%; 
+            height: 85vh; 
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        
+        .close-btn {
+            position: absolute; 
+            right: 10px; 
+            top: -45px;
+            color: #d4af37; 
+            font-size: 35px; 
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             #countdown { font-size: 1.8rem; }
-        }
-
-        /* Modal (hidden by default) */
-        #itinerary-modal {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
-        }
-        .modal-content {
-            position: relative; margin: auto; top: 5%;
-            width: 90%; height: 85%; border: 1px solid #d4af37;
-        }
-        .close-btn {
-            position: absolute; right: 20px; top: -40px;
-            color: #d4af37; font-size: 30px; cursor: pointer;
+            .modal-content { width: 95%; height: 80vh; top: 10vh; }
         }
     </style>
 </head>
@@ -149,17 +167,17 @@
         <div id="countdown">Calculating...</div>
 
         <div class="nav-container">
-            <a href="https://maps.google.com" class="card">
+            <a href="https://maps.google.com" class="card" target="_blank">
                 <h2 style="font-family: 'Playfair Display'; margin-bottom: 15px;">The Venue</h2>
                 <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">Experience excellence in a curated setting. Click to view the location and map directions.</p>
                 <div class="btn-luxury">Explore Map</div>
             </a>
 
-            <a href="javascript:void(0)" onclick="openModal()" class="card">
-                <h2>The Itinerary</h2>
-                <p>View the schedule without leaving this page.</p>
+            <div onclick="openModal()" class="card">
+                <h2 style="font-family: 'Playfair Display'; margin-bottom: 15px;">The Itinerary</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">View the complete assembly schedule and sessions without leaving this page.</p>
                 <div class="btn-luxury">View Schedule</div>
-            </a>
+            </div>
         </div>
 
         <div class="attire-section">
@@ -174,28 +192,48 @@
 
     <div id="itinerary-modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="event.stopPropagation(); closeModal();">&times;</span>
             <iframe src="https://sites.google.com/view/teambuilding2026/home" 
-                    style="width:100%; height:100%; border:none;"></iframe>
+                    style="width:100%; height:100%; border:none;" 
+                    allow="autoplay"></iframe>
         </div>
     </div>
 
     <script>
         const music = document.getElementById("bg-music");
+        const modal = document.getElementById("itinerary-modal");
         let hasStarted = false;
 
         // Auto-play trigger on first interaction
         function startAudio() {
             if (!hasStarted) {
-                music.play().catch(error => {
+                music.play().then(() => {
+                    hasStarted = true;
+                }).catch(error => {
                     console.log("Audio waiting for stronger interaction...");
                 });
-                hasStarted = true;
+            }
+        }
+
+        // Modal Functions
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal if user clicks outside the content box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
             }
         }
 
         // Countdown Logic for January 31, 2026
         const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
+        
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -212,9 +250,6 @@
                 clearInterval(x);
                 document.getElementById("countdown").innerHTML = "THE EVENT COMMENCES";
             }
-
-            function openModal() { document.getElementById("itinerary-modal").style.display = "block"; }
-            function closeModal() { document.getElementById("itinerary-modal").style.display = "none"; }
         }, 1000);
     </script>
 </body>
