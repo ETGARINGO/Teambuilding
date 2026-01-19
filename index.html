@@ -2,147 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>RPRMD Team Building 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RPRMD 2026</title>
     <style>
         * { box-sizing: border-box; }
         
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
             background-color: #000;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             color: white;
-            /* Allows scrolling to see full video */
-            overflow-y: auto; 
-            overflow-x: hidden;
         }
 
-        /* Fixed Video Background - Stays still while you scroll */
+        /* Video as the main background */
         #bg-video {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translateX(-50%) translateY(-50%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
             object-fit: cover;
         }
 
-        /* Very light overlay to ensure text is readable but video is clear */
-        .video-shade {
+        /* Top Countdown - Ultra Minimal */
+        .top-bar {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: -1;
+            top: 0; width: 100%;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+            text-align: center;
+            z-index: 10;
         }
 
-        /* Scrolling Content Container */
-        .scroll-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0 100px 0; /* Extra bottom padding to allow scrolling past the card */
+        #timer {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* Transparent Countdown Header */
-        .countdown-container {
+        /* The Minimized Transparent Card */
+        .bottom-card {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.4); /* High transparency */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
             padding: 15px;
-            margin: 20px 0;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
         }
 
-        .timer { display: flex; justify-content: center; gap: 15px; }
-        .timer-unit { display: flex; flex-direction: column; }
-        .timer-value { font-size: 1.5rem; font-weight: bold; }
-        .timer-label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.8; }
-
-        /* Transparent Glass Card */
-        .content-card {
-            background: rgba(255, 255, 255, 0.1); /* Very thin white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 30px;
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            margin-top: 20px;
+        /* Collapsed State Class */
+        .bottom-card.collapsed {
+            transform: translateX(-50%) translateY(80%);
+            background: rgba(0, 0, 0, 0.2);
         }
 
-        .attire-img {
-            width: 100%;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .attire-preview {
+            width: 60px; /* Small preview to keep card low profile */
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        h1 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
-        /* Buttons */
         .btn {
-            display: block;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-radius: 15px;
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: 0.3s;
+            font-weight: 600;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: 0.3s;
         }
 
-        .btn-maps {
-            background: rgba(255, 255, 255, 0.9);
-            color: #000;
+        .btn-maps { background: #fff; color: #000; }
+        .btn-details { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+
+        .toggle-tab {
+            width: 40px; height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            margin: 0 auto 10px auto;
+            cursor: pointer;
         }
 
-        .btn-details {
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .tap-hint {
-            font-size: 0.7rem;
+        .audio-status {
+            font-size: 0.6rem;
             margin-top: 10px;
-            opacity: 0.7;
-            letter-spacing: 2px;
-        }
-
-        /* Down Arrow to indicate scrolling */
-        .scroll-indicator {
-            margin-top: 40px;
-            font-size: 2rem;
-            animation: bounce 2s infinite;
             opacity: 0.6;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -152,50 +116,47 @@
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
     </video>
 
-    <div class="video-shade"></div>
+    <div class="top-bar">
+        <div id="timer">00d : 00h : 00m : 00s</div>
+    </div>
 
-    <div class="scroll-wrapper">
-        <div class="countdown-container">
-            <div class="timer" id="countdown">
-                <div class="timer-unit"><span class="timer-value" id="days">00</span><span class="timer-label">Days</span></div>
-                <div class="timer-unit"><span class="timer-value" id="hours">00</span><span class="timer-label">Hrs</span></div>
-                <div class="timer-unit"><span class="timer-value" id="mins">00</span><span class="timer-label">Min</span></div>
-                <div class="timer-unit"><span class="timer-value" id="secs">00</span><span class="timer-label">Sec</span></div>
-            </div>
+    <div class="bottom-card" id="mainCard">
+        <div class="toggle-tab" onclick="toggleCard()"></div>
+        
+        <img src="A Fresh Start for a Stronger RPRMD.png" class="attire-preview" alt="Attire">
+        
+        <div class="actions">
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="btn btn-maps">Maps</a>
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-details">Details</a>
         </div>
 
-        <div class="content-card">
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Advise Attire" class="attire-img">
-            <h1>RPRMD 2026</h1>
-            
-            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="btn btn-maps">📍 Navigate to Event</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-details">ℹ️ Full Details</a>
-            
-            <div class="tap-hint" id="status">TAP FOR SOUND 🔊</div>
-        </div>
-
-        <div class="scroll-indicator">↓</div>
+        <div class="audio-status" id="audioText">TAP TO UNMUTE VIDEO 🔊</div>
     </div>
 
     <script>
-        // --- COUNTDOWN TIMER ---
-        const eventDate = new Date("January 30, 2026 08:00:00").getTime();
-        setInterval(function() {
+        // Toggle Card Visibility
+        function toggleCard() {
+            document.getElementById('mainCard').classList.toggle('collapsed');
+        }
+
+        // Countdown Logic
+        const target = new Date("January 30, 2026 08:00:00").getTime();
+        setInterval(() => {
             const now = new Date().getTime();
-            const distance = eventDate - now;
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("mins").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("secs").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            const diff = target - now;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
         }, 1000);
 
-        // --- AUDIO UNLOCK ---
-        document.body.addEventListener('click', function() {
-            const video = document.getElementById('bg-video');
-            video.muted = false;
-            document.getElementById('status').innerHTML = "AUDIO ON 🎵";
+        // Audio Handler
+        document.body.addEventListener('click', () => {
+            const v = document.getElementById('bg-video');
+            v.muted = false;
+            document.getElementById('audioText').innerText = "AUDIO ACTIVE 🎵";
         }, { once: true });
     </script>
-
 </body>
 </html>
