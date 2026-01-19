@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Team Building 2026 - RPRMD</title>
+    <title>RPRMD 2026</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        :root { --primary: #ffcc00; --glass: rgba(255, 255, 255, 0.15); }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 
-        body, html { height: 100%; overflow: hidden; background-color: #000; color: white; }
+        body, html { height: 100%; overflow-x: hidden; background: #000; }
 
-        /* Full-screen Video Background - 100% Clear */
-        #bg-video {
+        /* Video Background */
+        #video-bg {
             position: fixed;
             top: 50%; left: 50%;
             min-width: 100%; min-height: 100%;
@@ -20,165 +22,152 @@
             object-fit: cover;
         }
 
-        /* Top Countdown Timer */
-        .top-timer {
-            position: fixed;
-            top: 40px;
-            width: 100%;
+        /* Full Screen Overlay */
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
             text-align: center;
-            font-size: 1.5rem;
-            font-weight: 500;
+        }
+
+        /* Mobile Responsive Header */
+        h1 {
+            font-size: 1.8rem;
+            color: white;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
-            z-index: 10;
-            transition: opacity 0.5s;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* The Content Card - Clear Glass Style */
-        .content-card {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            /* No black background, just a subtle glass tint and border */
-            background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 25px;
-            border-radius: 30px;
-            text-align: center;
-            z-index: 20;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .attire-img {
-            width: 70px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-
-        /* Buttons Layout */
-        .btn-row {
+        /* Dynamic Countdown */
+        #countdown {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin: 20px 0;
         }
+        .time-box {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 65px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .time-box span { display: block; color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+        .time-box label { font-size: 0.6rem; text-transform: uppercase; color: white; }
 
-        .btn {
-            flex: 1;
-            padding: 15px;
+        /* Navigation Buttons */
+        .nav-stack { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; margin: 30px 0; }
+        
+        .action-btn {
+            background: white;
+            color: black;
+            padding: 18px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.8rem;
-            border-radius: 12px;
-            text-transform: uppercase;
-            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
+        .action-btn.secondary { background: var(--glass); color: white; border: 1px solid white; backdrop-filter: blur(5px); }
 
-        .btn-primary { background: #fff; color: #000; }
-        .btn-secondary { background: rgba(0,0,0,0.1); color: #fff; border: 1px solid #fff; }
-
-        /* Toggle Text */
-        .toggle-text {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-decoration: underline;
-            opacity: 0.8;
+        /* Attire Image */
+        .attire-card {
+            background: var(--glass);
+            padding: 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
         }
+        .attire-card img { width: 100%; max-width: 280px; border-radius: 12px; }
+        .attire-card p { color: white; margin-top: 10px; font-size: 0.9rem; font-weight: bold; }
 
-        /* Classes for Toggling */
-        .hidden-ui {
-            opacity: 0 !important;
-            pointer-events: none;
-            transform: translateX(-50%) translateY(20px);
+        /* Entry Modal (Needed for Audio Autoplay) */
+        #entry-modal {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: black; z-index: 100;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; transition: 0.5s;
         }
-
-        /* Restore Button - subtle and small */
-        #restore-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,255,255,0.2);
-            border: 1px solid #fff;
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            display: none;
-            z-index: 100;
-            cursor: pointer;
+        #start-btn { 
+            padding: 15px 40px; border: 2px solid var(--primary); color: var(--primary); 
+            background: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
-    </video>
-
-    <div class="top-timer" id="timer">00d : 00h : 00m : 00s</div>
-
-    <div class="content-card" id="main-card">
-        <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire" class="attire-img">
-        
-        <div class="btn-row">
-            <a href="https://www.google.com/maps" class="btn btn-primary">📍 Maps</a>
-            <a href="https://sites.google.com/view/teambuilding2026/home" class="btn btn-secondary">Details</a>
-        </div>
-        
-        <p class="toggle-text" onclick="toggleView(true)">View Full Video</p>
+    <div id="entry-modal">
+        <h2 style="margin-bottom: 20px;">RPRMD TEAM BUILDING</h2>
+        <button id="start-btn" onclick="startExperience()">ENTER SITE</button>
     </div>
 
-    <button id="restore-btn" onclick="toggleView(false)">Show Details</button>
+    <video loop playsinline id="video-bg">
+        <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
+    </video>
+    <audio id="bg-audio" loop>
+        <source src="your-audio-file.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="overlay">
+        <h1>A Fresh Start</h1>
+        <p style="color:white; opacity: 0.8;">for a Stronger RPRMD</p>
+
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span><label>Days</label></div>
+            <div class="time-box"><span id="hours">00</span><label>Hrs</label></div>
+            <div class="time-box"><span id="mins">00</span><label>Min</label></div>
+            <div class="time-box"><span id="secs">00</span><label>Sec</label></div>
+        </div>
+
+        <div class="nav-stack">
+            <a href="https://maps.app.goo.gl/nQcuBCNj9Ngcophj8" class="action-btn">
+                📍 START NAVIGATION
+            </a>
+            <a href="https://sites.google.com/view/teambuilding2026/home" class="action-btn secondary">
+                📋 EVENT DETAILS
+            </a>
+        </div>
+
+        <div class="attire-card">
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire">
+            <p>DRESS CODE: ADVISE ATTIRE</p>
+        </div>
+    </div>
 
     <script>
-        // Set Date to January 31, 2026
-        const eventDate = new Date("January 31, 2026 08:00:00").getTime();
+        function startExperience() {
+            // Hide modal
+            document.getElementById('entry-modal').style.opacity = '0';
+            setTimeout(() => { document.getElementById('entry-modal').style.display = 'none'; }, 500);
+            
+            // Play Video & Audio
+            const vid = document.getElementById('video-bg');
+            const aud = document.getElementById('bg-audio');
+            vid.play();
+            aud.play();
+        }
 
-        function updateTimer() {
+        // Countdown Logic
+        const target = new Date("March 15, 2026 08:00:00").getTime();
+        
+        setInterval(() => {
             const now = new Date().getTime();
-            const diff = eventDate - now;
-
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('timer').innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
-        }
-
-        setInterval(updateTimer, 1000);
-        updateTimer();
-
-        // Toggle Function
-        function toggleView(hide) {
-            const card = document.getElementById('main-card');
-            const timer = document.getElementById('timer');
-            const restore = document.getElementById('restore-btn');
-
-            if(hide) {
-                card.classList.add('hidden-ui');
-                timer.classList.add('hidden-ui');
-                restore.style.display = 'block';
-            } else {
-                card.classList.remove('hidden-ui');
-                timer.classList.remove('hidden-ui');
-                restore.style.display = 'none';
-            }
-        }
-
-        // Unmute on first click
-        document.body.addEventListener('click', function() {
-            document.getElementById('bg-video').muted = false;
-        }, { once: true });
+            const diff = target - now;
+            
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
     </script>
-
 </body>
 </html>
