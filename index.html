@@ -35,7 +35,7 @@
             background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
             padding: 40px 20px;
             text-align: center;
-            transition: 0.8s ease;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s;
         }
 
         h1 {
@@ -65,13 +65,15 @@
             gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
+            max-width: 1000px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 45px 35px;
             width: 340px;
             transition: 0.5s ease;
             text-decoration: none;
@@ -95,38 +97,48 @@
             display: inline-block;
         }
 
-        /* FULL SCREEN FRAME OVERLAY */
+        /* THE FRAME LAYER */
         #frame-layer {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: #000;
-            z-index: 9999;
+            z-index: 5000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #frame-layer.active {
+            display: block;
+            opacity: 1;
         }
 
         .close-frame {
             position: absolute;
             top: 20px; right: 30px;
             color: #d4af37;
-            font-size: 50px;
+            font-size: 40px;
             cursor: pointer;
-            z-index: 10001;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 6000;
         }
 
         iframe {
             width: 100%;
             height: 100%;
             border: none;
-            background: white; /* Helps visibility while loading */
         }
 
         .attire-img {
             max-width: 180px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             margin-top: 50px;
+            filter: grayscale(0.5);
+            transition: 0.5s;
         }
+
+        .attire-img:hover { filter: grayscale(0); transform: scale(1.05); }
+
     </style>
 </head>
 <body onclick="startAudio()">
@@ -136,7 +148,7 @@
     </audio>
 
     <div id="frame-layer">
-        <span class="close-frame" onclick="hideFrame()">×</span>
+        <span class="close-frame" onclick="hideFrame()">&times;</span>
         <iframe src="https://sites.google.com/view/teambuilding2026/home"></iframe>
     </div>
 
@@ -145,7 +157,7 @@
     </video>
 
     <div class="overlay" id="main-ui">
-        <p style="letter-spacing: 5px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">OFFICIAL INVITATION</p>
+        <p style="letter-spacing: 5px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">PNP RPRMD PRESENTATION</p>
         <h1>A Fresh Start for a Stronger RPRMD</h1>
         
         <div id="countdown">Calculating...</div>
@@ -153,13 +165,13 @@
         <div class="nav-container">
             <a href="https://maps.google.com" class="card" target="_blank">
                 <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Venue</h2>
-                <p style="font-size: 0.8rem; opacity: 0.5; line-height: 1.8;">View location details and tactical directions.</p>
-                <div class="btn-luxury">Explore Map</div>
+                <p style="font-size: 0.8rem; opacity: 0.5; line-height: 1.8;">Experience the mission in a curated environment.</p>
+                <div class="btn-luxury">Map Location</div>
             </a>
 
             <div class="card" onclick="showFrame()">
                 <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Itinerary</h2>
-                <p style="font-size: 0.8rem; opacity: 0.5; line-height: 1.8;">Access event sequence and mission objectives.</p>
+                <p style="font-size: 0.8rem; opacity: 0.5; line-height: 1.8;">Access the complete sequence of events and tactical sessions.</p>
                 <div class="btn-luxury">Enter Mission</div>
             </div>
         </div>
@@ -169,31 +181,34 @@
 
     <script>
         const music = document.getElementById("bg-music");
-        const frameLayer = document.getElementById("frame-layer");
+        const frame = document.getElementById("frame-layer");
+        const mainUI = document.getElementById("main-ui");
         let hasStarted = false;
 
         function startAudio() {
             if (!hasStarted) {
-                music.play().catch(e => console.log("Audio waiting for user click"));
+                music.play();
                 hasStarted = true;
             }
         }
 
         function showFrame() {
-            frameLayer.style.display = "block";
-            // Ensure audio continues playing
-            startAudio();
+            frame.classList.add('active');
+            mainUI.style.transform = "scale(0.9)";
+            mainUI.style.opacity = "0";
         }
 
         function hideFrame() {
-            frameLayer.style.display = "none";
+            frame.classList.remove('active');
+            mainUI.style.transform = "scale(1)";
+            mainUI.style.opacity = "1";
         }
 
-        // Countdown Timer
-        const target = new Date("January 31, 2026 08:00:00").getTime();
+        // Countdown logic
+        const targetDate = new Date("January 31, 2026 08:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
-            const diff = target - now;
+            const diff = targetDate - now;
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
