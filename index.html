@@ -13,6 +13,7 @@
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            cursor: pointer; /* Indicates the page is interactive */
         }
 
         /* Luxury Background Video */
@@ -22,7 +23,7 @@
             min-width: 100%; min-height: 100%;
             z-index: -2;
             object-fit: cover;
-            filter: brightness(0.4) contrast(1.1);
+            filter: brightness(0.35) contrast(1.1);
         }
 
         .overlay {
@@ -31,38 +32,15 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
             padding: 40px 20px;
             text-align: center;
-        }
-
-        /* AUDIO CONTROL BUTTON */
-        .audio-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: #d4af37;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        .audio-toggle:hover {
-            background: rgba(212, 175, 55, 0.2);
         }
 
         /* Typography */
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             letter-spacing: 2px;
             margin-bottom: 10px;
             background: linear-gradient(to bottom, #ffffff 0%, #d4af37 100%);
@@ -83,7 +61,7 @@
 
         #countdown {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: clamp(1.5rem, 4vw, 3rem);
             margin-bottom: 50px;
             color: #d4af37;
             border-top: 1px solid rgba(212, 175, 55, 0.3);
@@ -92,6 +70,7 @@
             display: inline-block;
         }
 
+        /* Navigation Cards */
         .nav-container {
             display: flex;
             gap: 30px;
@@ -106,14 +85,15 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px 30px;
             width: 320px;
-            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             text-decoration: none;
             color: white;
         }
 
         .card:hover {
             transform: translateY(-10px);
-            border-color: rgba(212, 175, 55, 0.5);
+            border-color: rgba(212, 175, 55, 0.6);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .btn-luxury { 
@@ -124,13 +104,15 @@
             color: #d4af37;
             padding: 12px 24px;
             display: inline-block;
+            margin-top: 15px;
         }
 
-        .attire-img {
+        .attire-section img {
             max-width: 220px;
             border: 1px solid rgba(212, 175, 55, 0.3);
             padding: 10px;
             margin-top: 20px;
+            transition: 0.4s;
         }
 
         @media (max-width: 768px) {
@@ -139,9 +121,7 @@
         }
     </style>
 </head>
-<body>
-
-    <button class="audio-toggle" onclick="toggleAudio()" id="audioBtn">Sound: Off</button>
+<body onclick="startAudio()">
 
     <video autoplay muted loop id="video-bg" playsinline>
         <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
@@ -155,58 +135,48 @@
 
         <div class="nav-container">
             <a href="https://maps.google.com" class="card">
-                <h2>The Venue</h2>
-                <p>Experience excellence in a curated setting. Click to view the location and map directions.</p>
+                <h2 style="font-family: 'Playfair Display'; margin-bottom: 15px;">The Venue</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">Experience excellence in a curated setting. Click to view the location and map directions.</p>
                 <div class="btn-luxury">Explore Map</div>
             </a>
 
             <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
-                <h2>The Itinerary</h2>
-                <p>A comprehensive guide to our sessions, guest experiences, and formal schedule.</p>
+                <h2 style="font-family: 'Playfair Display'; margin-bottom: 15px;">The Itinerary</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">A comprehensive guide to our sessions, guest experiences, and formal schedule.</p>
                 <div class="btn-luxury">Event Details</div>
             </a>
         </div>
 
         <div class="attire-section">
-            <h3 style="font-family: 'Playfair Display'; font-style: italic; margin-top: 40px;">The Dress Code</h3>
-            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
+            <h3 style="font-family: 'Playfair Display'; font-style: italic; margin-top: 40px; color: #d4af37;">The Dress Code</h3>
+            <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide">
         </div>
 
         <audio id="bg-music" loop>
-            <source src="your-audio-file.mp3" type="audio/mpeg">
+            <source src="aud.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
         const music = document.getElementById("bg-music");
-        const audioBtn = document.getElementById("audioBtn");
+        let hasStarted = false;
 
-        // Function to toggle music manually
-        function toggleAudio() {
-            if (music.paused) {
-                music.play();
-                audioBtn.innerText = "Sound: On";
-            } else {
-                music.pause();
-                audioBtn.innerText = "Sound: Off";
+        // Auto-play trigger on first interaction
+        function startAudio() {
+            if (!hasStarted) {
+                music.play().catch(error => {
+                    console.log("Audio waiting for stronger interaction...");
+                });
+                hasStarted = true;
             }
         }
 
-        // Luxury touch: Try to play audio when the user clicks anywhere on the page
-        document.body.addEventListener('click', function() {
-            if (music.paused && audioBtn.innerText === "Sound: Off") {
-                // We don't force it here to respect user choice, 
-                // but you can uncomment the next lines to force play on first click:
-                // music.play();
-                // audioBtn.innerText = "Sound: On";
-            }
-        }, { once: true });
-
-        // Countdown Logic
+        // Countdown Logic for January 31, 2026
         const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
