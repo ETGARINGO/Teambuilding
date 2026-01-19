@@ -9,213 +9,190 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #0a0a0a;
+            background-color: #000;
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        /* Luxury Background Video */
-        #video-bg {
+        /* Video Background Fixes */
+        .video-container {
             position: fixed;
-            right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
-            z-index: -2;
-            object-fit: cover;
-            filter: brightness(0.4) contrast(1.1);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2; /* Keeps video behind everything */
+            overflow: hidden;
         }
 
-        /* Subtle Gradient Overlay */
+        #video-bg {
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto; height: auto;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Contrast Overlay */
         .overlay {
+            position: relative;
+            z-index: 1; /* Ensures text is above video */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
             padding: 40px 20px;
             text-align: center;
         }
 
-        /* Typography */
+        /* Luxury Audio Controls */
+        .audio-control {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: #d4af37;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .audio-control:hover { background: rgba(212, 175, 55, 0.2); }
+
+        /* Typography & UI */
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             letter-spacing: 2px;
             margin-bottom: 10px;
             background: linear-gradient(to bottom, #ffffff 0%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
         }
 
-        .subtitle {
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-
-        /* Luxury Countdown */
         #countdown {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 50px;
-            color: #d4af37; /* Champagne Gold */
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            margin: 30px 0 50px 0;
+            color: #d4af37;
             border-top: 1px solid rgba(212, 175, 55, 0.3);
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
             padding: 15px 40px;
-            display: inline-block;
         }
 
-        /* Navigation Cards */
-        .nav-container {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1100px;
-        }
+        .nav-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
 
         .card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px 30px;
-            border-radius: 4px; /* Sharper corners for a modern luxury look */
+            padding: 40px;
             width: 320px;
-            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none;
             color: white;
-            position: relative;
-            overflow: hidden;
+            transition: 0.4s;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(212, 175, 55, 0.5);
-        }
+        .card:hover { border-color: #d4af37; transform: translateY(-5px); }
 
-        .card h2 { 
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 15px; 
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-        }
-
-        .card p { 
-            font-size: 0.85rem; 
-            opacity: 0.6; 
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .btn-luxury { 
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .btn-luxury {
+            margin-top: 20px;
             border: 1px solid #d4af37;
             color: #d4af37;
-            padding: 12px 24px;
-            transition: all 0.3s;
+            padding: 10px 20px;
             display: inline-block;
-        }
-
-        .card:hover .btn-luxury {
-            background: #d4af37;
-            color: #000;
-        }
-
-        /* Attire Section */
-        .attire-section {
-            margin-top: 60px;
-        }
-
-        .attire-section h3 {
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            font-style: italic;
+            font-size: 0.8rem;
         }
 
         .attire-img {
-            max-width: 220px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            transition: transform 0.4s;
-        }
-        
-        .attire-img:hover {
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            #countdown { font-size: 1.8rem; }
+            margin-top: 30px;
+            max-width: 200px;
+            border: 1px solid #d4af37;
+            filter: grayscale(20%);
         }
     </style>
 </head>
 <body>
 
-    <video autoplay muted loop id="video-bg" playsinline>
-        <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
-    </video>
+    <div class="audio-control" onclick="toggleAudio()" id="audio-status">
+        Music: Off
+    </div>
+
+    <div class="video-container">
+        <video autoplay muted loop id="video-bg" playsinline>
+            <source src="Facebook_1768819173745_4K_2160p_.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div class="overlay">
-        <p class="subtitle">You are cordially invited to</p>
+        <p style="letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 20px; opacity: 0.7;">JANUARY 31, 2026</p>
         <h1>A Fresh Start for a Stronger RPRMD</h1>
         
         <div id="countdown">Calculating...</div>
 
         <div class="nav-container">
             <a href="https://maps.google.com" class="card">
-                <h2>The Venue</h2>
-                <p>Experience excellence in a curated setting. Click to view the location and map directions.</p>
-                <div class="btn-luxury">Explore Map</div>
+                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Location</h2>
+                <p style="font-size: 0.8rem; opacity: 0.7;">Navigate to the curated venue selected for our 2026 assembly.</p>
+                <div class="btn-luxury">View Map</div>
             </a>
-
             <a href="https://sites.google.com/view/teambuilding2026/home" class="card">
-                <h2>The Itinerary</h2>
-                <p>A comprehensive guide to our sessions, guest experiences, and formal schedule.</p>
-                <div class="btn-luxury">Event Details</div>
+                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Itinerary</h2>
+                <p style="font-size: 0.8rem; opacity: 0.7;">Explore the journey we have planned for the team.</p>
+                <div class="btn-luxury">Details</div>
             </a>
         </div>
 
         <div class="attire-section">
-            <h3>The Dress Code</h3>
+            <h3 style="font-family: 'Playfair Display'; margin-top: 40px; font-style: italic;">Advise Attire</h3>
             <img src="A Fresh Start for a Stronger RPRMD.png" alt="Attire Guide" class="attire-img">
         </div>
 
-        <audio id="bg-music" loop>
+        <audio id="bg-audio" loop>
             <source src="your-audio-file.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
-        // Updated Event Date: January 31, 2026
-        const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
+        // Audio Toggle Function
+        const audio = document.getElementById("bg-audio");
+        const audioBtn = document.getElementById("audio-status");
 
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                audioBtn.innerHTML = "Music: On";
+            } else {
+                audio.pause();
+                audioBtn.innerHTML = "Music: Off";
+            }
+        }
+
+        // Countdown for January 31, 2026
+        const countDownDate = new Date("January 31, 2026 08:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = 
-                days + "<span>d</span> : " + hours + "<span>h</span> : " + minutes + "<span>m</span> : " + seconds + "<span>s</span>";
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "THE EVENT COMMENCES";
+                document.getElementById("countdown").innerHTML = "EVENT LIVE";
             }
         }, 1000);
     </script>
