@@ -3,243 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPRMD | TEQUILA DISCO 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Inter:wght@400;900&family=Monoton&display=swap" rel="stylesheet">
+    <title>RPRMD | Tequila Disco 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;900&family=Monoton&display=swap" rel="stylesheet">
     <style>
         :root {
-            --agave-green: #adff2f;
-            --tequila-gold: #ffcc00;
+            --neon-green: #adff2f;
+            --deep-gold: #d4af37;
             --disco-pink: #ff00de;
-            --salt-white: #f0f0f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #000;
-            color: var(--salt-white);
+            background-color: #050505;
+            color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: url('https://cdn-icons-png.flaticon.com/32/924/924514.png'), auto; /* Custom Lime Cursor */
+            cursor: crosshair;
         }
 
-        /* Moving Disco Grid Background */
-        .tequila-bg {
+        /* Animated Disco Background */
+        .disco-floor {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
-            background: 
-                linear-gradient(transparent 0%, rgba(173, 255, 47, 0.05) 2%, transparent 3%),
-                linear-gradient(90deg, transparent 0%, rgba(173, 255, 47, 0.05) 2%, transparent 3%);
-            background-size: 50px 50px;
-            perspective: 500px;
-            animation: gridScroll 10s linear infinite;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background-color: #0a0a0a;
         }
 
-        @keyframes gridScroll {
+        .neon-grid {
+            position: fixed;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background-image: 
+                linear-gradient(var(--neon-green) 1px, transparent 1px),
+                linear-gradient(90deg, var(--neon-green) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            opacity: 0.15;
+            animation: moveGrid 10s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveGrid {
             from { background-position: 0 0; }
             to { background-position: 0 100%; }
         }
 
-        /* Ambient Agave Glow */
-        .glow {
-            position: fixed;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(173, 255, 47, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(80px);
-            animation: moveGlow 20s infinite alternate;
-        }
-
-        @keyframes moveGlow {
-            0% { top: -10%; left: -10%; }
-            100% { top: 80%; left: 80%; }
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .overlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 80px 20px;
             text-align: center;
         }
 
-        /* Neon Agave Heading */
+        /* Monoton Disco Header */
         h1 {
             font-family: 'Monoton', cursive;
-            font-size: clamp(3rem, 12vw, 7rem);
-            line-height: 1;
-            margin-bottom: 10px;
-            color: var(--agave-green);
-            text-shadow: 
-                0 0 10px var(--agave-green),
-                0 0 30px var(--agave-green),
-                0 0 60px #00ff00;
-            animation: pulse 2s infinite;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+            margin-bottom: 5px;
+            letter-spacing: 4px;
+            animation: pulse 2s infinite alternate;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.02); opacity: 0.8; }
+            from { opacity: 0.8; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .sub-title {
+        .sub-header {
+            font-family: 'Playfair Display', serif;
             font-weight: 900;
-            letter-spacing: 15px;
-            color: var(--tequila-gold);
+            font-style: italic;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: var(--deep-gold);
             text-transform: uppercase;
             margin-bottom: 40px;
-            font-size: 0.9rem;
-        }
-
-        /* Countdown Salt Box */
-        .salt-box {
-            border: 2px solid var(--salt-white);
-            display: inline-block;
-            padding: 20px 50px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .salt-box::before {
-            content: '';
-            position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            border: 1px solid var(--agave-green);
-            z-index: -1;
         }
 
         #countdown {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-style: italic;
-            color: var(--salt-white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            margin: 20px 0;
+            background: linear-gradient(90deg, #fff, var(--deep-gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 10px 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: inline-block;
         }
 
-        /* Flush Attire Display */
-        .attire-hero {
+        /* Enlarged Attire Section */
+        .attire-showcase {
+            margin-top: 60px;
+            max-width: 800px;
+            width: 100%;
             position: relative;
-            width: 100%;
-            height: 500px;
-            margin: 60px 0;
-            border-radius: 0;
-            overflow: hidden;
-            border: 1px solid var(--agave-green);
-        }
-
-        .attire-hero img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: saturate(1.5) contrast(1.2);
-            opacity: 0.8;
-            transition: 0.5s;
-        }
-
-        .attire-hero:hover img {
-            opacity: 1;
-            transform: scale(1.05);
         }
 
         .attire-label {
-            position: absolute;
-            bottom: 30px; left: 30px;
-            background: var(--agave-green);
+            background: var(--neon-green);
             color: #000;
-            padding: 10px 30px;
             font-weight: 900;
+            padding: 10px 20px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            margin-bottom: -20px;
+            position: relative;
+            z-index: 2;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        /* Map Section */
-        .map-section {
-            border-left: 4px solid var(--tequila-gold);
-            padding-left: 20px;
-            text-align: left;
-            margin-top: 80px;
-        }
-
-        .map-frame {
+        .attire-img {
             width: 100%;
-            height: 400px;
-            background: #111;
-            margin-top: 20px;
-            filter: invert(90%) hue-rotate(180deg); /* Stylized dark map */
+            height: auto;
+            border: 10px solid #fff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(173, 255, 47, 0.2);
+            filter: contrast(1.1);
+            transition: 0.4s;
         }
 
-        /* Particle CSS */
+        .attire-img:hover {
+            transform: scale(1.02);
+            border-color: var(--neon-green);
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--neon-green);
+            padding: 30px;
+            width: 300px;
+            transition: 0.3s;
+            text-decoration: none;
+            color: white;
+            text-align: left;
+        }
+
+        .card:hover {
+            background: rgba(173, 255, 47, 0.1);
+            transform: translateX(10px);
+        }
+
+        /* Interactive Particle */
         .particle {
             position: absolute;
             pointer-events: none;
+            z-index: 999;
             font-size: 24px;
-            z-index: 1000;
-        }
-
-        .btn-tequila {
-            display: inline-block;
-            padding: 20px 60px;
-            background: var(--agave-green);
-            color: #000;
-            text-decoration: none;
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            transition: 0.3s;
-            margin-top: 20px;
-        }
-
-        .btn-tequila:hover {
-            background: var(--tequila-gold);
-            box-shadow: 0 0 40px var(--tequila-gold);
-            transform: skew(-10deg);
         }
     </style>
 </head>
 <body onclick="shotSplash(event)">
 
-    <div class="tequila-bg"></div>
-    <div class="glow"></div>
+    <audio id="bg-music" loop>
+        <source src="Audio intru.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="container">
-        <p class="sub-title">One Team. One Spirit. No Limits.</p>
+    <div class="disco-floor"></div>
+    <div class="neon-grid"></div>
+
+    <div class="overlay">
+        <p style="letter-spacing: 10px; font-weight: 300; opacity: 0.7; margin-bottom: 10px;">RPRMD EXECUTIVE REVELRY</p>
         <h1>TEQUILA DISCO</h1>
-        <p style="margin-top: -10px; opacity: 0.6; font-style: italic;">The 2026 RPRMD Leadership Summit</p>
+        <p class="sub-header">A Fresh Start • A Stronger Team</p>
         
-        <div class="salt-box">
-            <div id="countdown">LOADING PARTY...</div>
+        <div id="countdown">00d : 00h : 00m : 00s</div>
+
+        <div class="nav-container">
+            <a href="https://maps.app.goo.gl/homsvxc3jUXfDpSQA" class="card" target="_blank">
+                <h3 style="color: var(--neon-green);">THE VENUE</h3>
+                <p style="font-size: 0.8rem; opacity: 0.6;">Santiago's Resort: The coordinate for elite collaboration.</p>
+            </a>
+
+            <a href="https://teambuilding.rprmd9.site/home" class="card" target="_blank">
+                <h3 style="color: var(--neon-green);">THE MISSION</h3>
+                <p style="font-size: 0.8rem; opacity: 0.6;">Access the tactical itinerary and session schedules.</p>
+            </a>
         </div>
 
-        <div>
-            <a href="https://teambuilding.rprmd9.site/home" class="btn-tequila">Get the Itinerary</a>
+        <div class="attire-showcase">
+            <div class="attire-label">Dress Code: Tropical Disco Rock</div>
+            <img src="Santiago's Resort.jpg" alt="Attire Guide" class="attire-img">
         </div>
 
-        <div class="attire-hero">
-            <img src="Santiago's Resort.jpg" alt="Attire">
-            <div class="attire-label">Dress Code: Neon Agave & Tropical Disco</div>
-        </div>
-
-        <div class="map-section">
-            <h2 style="font-family: 'Monoton'; font-size: 2rem; color: var(--tequila-gold);">THE DESTINATION</h2>
-            <p style="opacity: 0.7;">Santiago's Resort | Tactical Team Coordination HQ</p>
-            <div class="map-frame">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.672314050212!2d122.0632!3d6.9248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041933c066373%3A0x6b4998734a706b88!2sSantiago's%20Resort!5e0!3m2!1sen!2sph!4v1700000000000" 
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
-            </div>
-        </div>
-
-        <p style="margin-top: 100px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 5px;">SALT • LIME • RPRMD • REPEAT</p>
+        <p style="margin-top: 60px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 4px;">SALT • LIME • LEADERSHIP</p>
     </div>
 
     <script>
-        // Tequila Shot Splash Effect
+        const music = document.getElementById("bg-music");
+        let hasStarted = false;
+
         function shotSplash(e) {
-            const icons = ['🍋', '🧂', '🧊', '✨', '🟢'];
-            for(let i = 0; i < 10; i++) {
+            // Start audio on first click
+            if (!hasStarted) {
+                music.play();
+                hasStarted = true;
+            }
+
+            // Create Tequila Particles (Limes & Sparkles)
+            const icons = ['🍋', '✨', '🟢', '🧊'];
+            for(let i = 0; i < 6; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
@@ -248,20 +226,25 @@
                 document.body.appendChild(p);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 10;
-                let x = 0; let y = 0;
+                const velocity = 4 + Math.random() * 6;
+                let x = 0;
+                let y = 0;
 
                 const anim = setInterval(() => {
                     x += Math.cos(angle) * velocity;
-                    y += Math.sin(angle) * velocity + 3; // Gravity
-                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x * 2}deg)`;
+                    y += Math.sin(angle) * velocity + 2; // gravity effect
+                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
                     p.style.opacity = p.style.opacity ? p.style.opacity - 0.03 : 1;
-                    if(p.style.opacity <= 0) { clearInterval(anim); p.remove(); }
+                    
+                    if(p.style.opacity <= 0) {
+                        clearInterval(anim);
+                        p.remove();
+                    }
                 }, 16);
             }
         }
 
-        // Countdown Logic
+        // Precise Countdown Logic
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -270,7 +253,7 @@
             const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((gap % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerHTML = gap > 0 ? `${d}D : ${h}H : ${m}M : ${s}S` : "SHOTS FIRED!";
+            document.getElementById("countdown").innerHTML = gap > 0 ? `${d}d : ${h}h : ${m}m : ${s}s` : "THE PARTY HAS STARTED";
         }, 1000);
     </script>
 </body>
