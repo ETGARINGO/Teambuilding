@@ -4,177 +4,205 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPRMD | Tequila Disco 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Inter:wght@300;400;700&family=Monoton&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --neon-pink: #ff00de;
+            --neon-blue: #00f2ff;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #050505;
-            color: #f4f4f4;
+            background: #050505;
+            color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: pointer;
-            /* Animated Team Building Disco Gradient */
-            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #0f0c29);
-            background-size: 400% 400%;
-            animation: discoMove 10s ease infinite;
+            min-height: 100vh;
         }
 
-        @keyframes discoMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Animated Mesh Gradient Background */
+        .flush-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(at 0% 0%, rgba(255, 0, 222, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 242, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 0, 222, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(0, 242, 255, 0.1) 0px, transparent 50%);
+            background-color: #050505;
+            animation: meshMove 15s ease infinite alternate;
         }
 
-        .overlay {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        @keyframes meshMove {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 60px 20px;
             text-align: center;
-            background: radial-gradient(circle, rgba(255,0,222,0.05) 0%, rgba(0,0,0,0.8) 100%);
         }
 
-        /* Neon Tequila Header */
+        /* Flush Typography */
         h1 {
             font-family: 'Monoton', cursive;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de;
-            margin-bottom: 20px;
-            letter-spacing: 5px;
-            animation: flicker 2s infinite alternate;
+            font-size: clamp(3rem, 10vw, 6rem);
+            background: linear-gradient(to right, #fff, var(--neon-pink), var(--neon-blue), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
         }
 
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de; }
-            20%, 24%, 55% { text-shadow: none; color: #333; }
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
-        #countdown {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #00f2ff;
-            text-shadow: 0 0 10px #00f2ff;
-            border-top: 2px solid rgba(0, 242, 255, 0.3);
-            border-bottom: 2px solid rgba(0, 242, 255, 0.3);
-            padding: 15px 40px;
-            margin: 30px 0;
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        /* Large Professional Attire Image */
-        .attire-section {
-            margin: 50px 0;
-            position: relative;
-        }
-
-        .attire-img {
-            width: 100%;
-            max-width: 600px; /* Enlarged for clarity */
-            border-radius: 10px;
-            border: 2px solid #ff00de;
-            box-shadow: 0 0 30px rgba(255, 0, 222, 0.4);
-            transition: transform 0.3s ease;
-        }
-
-        .attire-img:hover {
-            transform: scale(1.02);
-        }
-
-        /* Embedded Map */
-        .map-container {
-            width: 100%;
-            max-width: 900px;
-            height: 450px;
-            margin: 40px 0;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid #00f2ff;
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.3);
-        }
-
-        .nav-container {
-            display: flex;
+        /* Countdown Glass Box */
+        .countdown-wrap {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            border-radius: 100px;
+            display: inline-flex;
             gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1000px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            width: 320px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: white;
+        .count-item {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+        }
+
+        /* Flush Image Gallery (Attire) */
+        .attire-container {
+            margin: 60px 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .attire-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .attire-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(20%) contrast(1.1);
+            transition: 0.5s;
+        }
+
+        .attire-card:hover img {
+            filter: grayscale(0%) scale(1.05);
+        }
+
+        .attire-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            text-align: left;
+        }
+
+        /* Interactive Map Frame */
+        .map-frame {
+            background: #000;
+            padding: 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+            height: 500px;
+            width: 100%;
+            margin: 40px 0;
+        }
+
+        /* Button Styling */
+        .btn-flush {
+            padding: 18px 45px;
+            background: transparent;
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            border-radius: 5px;
             transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #ff00de;
-            transform: translateY(-5px);
+        .btn-flush:hover {
+            background: var(--neon-pink);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-pink);
         }
 
-        /* Particle effect */
         .particle {
             position: absolute;
             pointer-events: none;
-            z-index: 999;
-            font-size: 20px;
+            z-index: 100;
+            filter: drop-shadow(0 0 5px white);
         }
     </style>
 </head>
-<body onclick="spawnConfetti(event)">
+<body onclick="spawnFlushParticles(event)">
 
-    <audio id="bg-music" loop>
-        <source src="Audio intru.mp3" type="audio/mpeg">
-    </audio>
+    <div class="flush-bg"></div>
 
-    <div class="overlay">
-        <p style="letter-spacing: 8px; font-size: 0.9rem; color: #00f2ff; font-weight: 600;">RPRMD MISSION: 2026</p>
+    <div class="container">
+        <p style="letter-spacing: 12px; font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px;">RPRMD EXECUTIVE PRESENTS</p>
         <h1>TEQUILA DISCO</h1>
         
-        <div id="countdown">00d : 00h : 00m : 00s</div>
-
-        <div class="nav-container">
-            <a href="https://teambuilding.rprmd9.site/home" class="card" target="_blank">
-                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px; color: #ff00de;">The Mission</h2>
-                <p style="font-size: 0.85rem; opacity: 0.8;">Full itinerary of tactical celebrations and team growth.</p>
-            </a>
+        <div class="countdown-wrap">
+            <div class="count-item" id="d">00d</div>
+            <div class="count-item" id="h">00h</div>
+            <div class="count-item" id="m">00m</div>
+            <div class="count-item" id="s">00s</div>
         </div>
 
-        <div class="attire-section">
-            <p style="margin-bottom: 15px; font-weight: bold; letter-spacing: 2px;">DRESS CODE: TROPICAL DISCO</p>
-            <img src="Santiago's Resort.jpg" alt="Attire Guide" class="attire-img">
+        <div style="margin: 20px 0;">
+            <a href="https://teambuilding.rprmd9.site/home" class="btn-flush">Access Itinerary</a>
         </div>
 
-        <h2 style="font-family: 'Playfair Display'; margin-top: 40px; color: #00f2ff;">Location Intel</h2>
-        <div class="map-container">
+        <div class="attire-container">
+            <div class="attire-card">
+                <img src="Santiago's Resort.jpg" alt="Dress Code Visual">
+                <div class="attire-overlay">
+                    <h2 style="font-family: 'Playfair Display'; font-size: 2rem;">Dress Intel: Tropical Disco</h2>
+                    <p style="opacity: 0.7; margin-top: 10px;">Vibrant linens, neon accents, and elite summer style.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-frame">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.916723237!2d122.064!3d6.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTQnMDAuMCJOIDEyMsKwMDMnNTAuNCJF!5e0!3m2!1sen!2sph!4v1700000000000" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.672666113642!2d122.064567!3d6.92967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32504192b4515555%3A0x6d90610931e0892c!2sSantiago's%20Resort!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph" 
+                width="100%" height="100%" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy">
             </iframe>
         </div>
+        
+        <p style="opacity: 0.4; font-size: 0.7rem; margin-top: 40px;">© 2026 RPRMD CORPORATE REVEAL</p>
     </div>
 
     <script>
-        const music = document.getElementById("bg-music");
-        let hasStarted = false;
-
-        function spawnConfetti(e) {
-            // Start audio on first click
-            if (!hasStarted) {
-                music.play();
-                hasStarted = true;
-            }
-
-            const icons = ['🍋', '✨', '🍹', '🟢'];
-            for(let i = 0; i < 6; i++) {
+        // High-end Particle System
+        function spawnFlushParticles(e) {
+            const icons = ['💎', '✨', '🟢', '🍋'];
+            for(let i = 0; i < 8; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
@@ -183,28 +211,28 @@
                 document.body.appendChild(p);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 4 + Math.random() * 6;
-                let x = 0; let y = 0;
+                const velocity = 3 + Math.random() * 7;
+                let x = 0, y = 0;
 
                 const anim = setInterval(() => {
                     x += Math.cos(angle) * velocity;
-                    y += Math.sin(angle) * velocity + 2; 
-                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
-                    p.style.opacity = p.style.opacity ? p.style.opacity - 0.03 : 1;
+                    y += Math.sin(angle) * velocity + 1.5;
+                    p.style.transform = `translate(${x}px, ${y}px) scale(${1 - (y/500)})`;
+                    p.style.opacity = p.style.opacity ? p.style.opacity - 0.02 : 1;
                     if(p.style.opacity <= 0) { clearInterval(anim); p.remove(); }
                 }, 16);
             }
         }
 
+        // Precise Countdown
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const gap = eventDate - now;
-            const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-            const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((gap % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerHTML = gap > 0 ? `${d}d : ${h}h : ${m}m : ${s}s` : "PARTY COMMENCED";
+            document.getElementById("d").innerHTML = Math.floor(gap / (1000 * 60 * 60 * 24)) + "d";
+            document.getElementById("h").innerHTML = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "h";
+            document.getElementById("m").innerHTML = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60)) + "m";
+            document.getElementById("s").innerHTML = Math.floor((gap % (1000 * 60)) / 1000) + "s";
         }, 1000);
     </script>
 </body>
