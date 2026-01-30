@@ -7,9 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;900&family=Monoton&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-green: #adff2f;
-            --deep-gold: #d4af37;
-            --disco-pink: #ff00de;
+            --agave-green: #74c365;
+            --lime-neon: #adff2f;
+            --tequila-gold: #d4af37;
+            --glass-bg: rgba(255, 255, 255, 0.03);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,33 +23,26 @@
             cursor: crosshair;
         }
 
-        /* Animated Disco Background */
-        .disco-floor {
+        /* Animated Agave Background */
+        .tequila-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-                        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            background-color: #0a0a0a;
+            background: radial-gradient(circle at 50% 50%, #1a2e1a 0%, #050505 100%);
         }
 
-        .neon-grid {
+        .ambient-glow {
             position: fixed;
-            width: 200%; height: 200%;
-            top: -50%; left: -50%;
-            background-image: 
-                linear-gradient(var(--neon-green) 1px, transparent 1px),
-                linear-gradient(90deg, var(--neon-green) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(60deg);
-            opacity: 0.15;
-            animation: moveGrid 10s linear infinite;
+            width: 150vw; height: 150vh;
+            top: -25vh; left: -25vw;
+            background: radial-gradient(circle, rgba(173, 255, 47, 0.05) 0%, transparent 70%);
+            animation: rotateGlow 15s linear infinite;
             z-index: -1;
         }
 
-        @keyframes moveGrid {
-            from { background-position: 0 0; }
-            to { background-position: 0 100%; }
+        @keyframes rotateGlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .overlay {
@@ -57,22 +51,18 @@
             align-items: center;
             padding: 80px 20px;
             text-align: center;
+            min-height: 100vh;
         }
 
-        /* Monoton Disco Header */
+        /* Monoton Tequila Header */
         h1 {
             font-family: 'Monoton', cursive;
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            color: var(--neon-green);
-            text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+            font-size: clamp(2.5rem, 10vw, 6rem);
+            color: var(--lime-neon);
+            text-shadow: 0 0 10px var(--lime-neon), 0 0 20px rgba(173, 255, 47, 0.5);
             margin-bottom: 5px;
-            letter-spacing: 4px;
-            animation: pulse 2s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { opacity: 0.8; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+            letter-spacing: 5px;
+            text-transform: uppercase;
         }
 
         .sub-header {
@@ -80,8 +70,8 @@
             font-weight: 900;
             font-style: italic;
             font-size: 1.2rem;
-            letter-spacing: 5px;
-            color: var(--deep-gold);
+            letter-spacing: 8px;
+            color: var(--tequila-gold);
             text-transform: uppercase;
             margin-bottom: 40px;
         }
@@ -89,49 +79,14 @@
         #countdown {
             font-family: 'Inter', sans-serif;
             font-weight: 900;
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            margin: 20px 0;
-            background: linear-gradient(90deg, #fff, var(--deep-gold), #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding: 10px 40px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            display: inline-block;
-        }
-
-        /* Enlarged Attire Section */
-        .attire-showcase {
-            margin-top: 60px;
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-        }
-
-        .attire-label {
-            background: var(--neon-green);
-            color: #000;
-            font-weight: 900;
-            padding: 10px 20px;
-            display: inline-block;
-            transform: rotate(-2deg);
-            margin-bottom: -20px;
-            position: relative;
-            z-index: 2;
-            text-transform: uppercase;
-        }
-
-        .attire-img {
-            width: 100%;
-            height: auto;
-            border: 10px solid #fff;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 20px rgba(173, 255, 47, 0.2);
-            filter: contrast(1.1);
-            transition: 0.4s;
-        }
-
-        .attire-img:hover {
-            transform: scale(1.02);
-            border-color: var(--neon-green);
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            color: #fff;
+            border-top: 2px solid var(--tequila-gold);
+            border-bottom: 2px solid var(--tequila-gold);
+            padding: 15px 40px;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
         }
 
         .nav-container {
@@ -139,85 +94,126 @@
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-left: 4px solid var(--neon-green);
-            padding: 30px;
-            width: 300px;
-            transition: 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 40px 30px;
+            width: 340px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             color: white;
-            text-align: left;
+            border-radius: 4px;
         }
 
         .card:hover {
-            background: rgba(173, 255, 47, 0.1);
-            transform: translateX(10px);
+            transform: scale(1.05);
+            border-color: var(--lime-neon);
+            box-shadow: 0 0 30px rgba(173, 255, 47, 0.1);
         }
 
-        /* Interactive Particle */
+        .card h2 {
+            font-family: 'Playfair Display';
+            color: var(--tequila-gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1.5rem;
+        }
+
+        /* Large Professional Attire Image */
+        .attire-showcase {
+            margin-top: 60px;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            padding: 10px;
+            background: linear-gradient(var(--tequila-gold), transparent);
+        }
+
+        .attire-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: contrast(1.1) saturate(1.2);
+        }
+
+        .attire-label {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            background: var(--lime-neon);
+            color: #000;
+            padding: 10px 25px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* Lime Splash Particles */
         .particle {
             position: absolute;
             pointer-events: none;
             z-index: 999;
-            font-size: 24px;
+            font-size: 20px;
         }
     </style>
 </head>
-<body onclick="shotSplash(event)">
+<body onclick="spawnSplash(event)">
 
     <audio id="bg-music" loop>
         <source src="Audio intru.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="disco-floor"></div>
-    <div class="neon-grid"></div>
+    <div class="tequila-bg"></div>
+    <div class="ambient-glow"></div>
 
     <div class="overlay">
-        <p style="letter-spacing: 10px; font-weight: 300; opacity: 0.7; margin-bottom: 10px;">RPRMD EXECUTIVE REVELRY</p>
+        <p style="letter-spacing: 12px; font-weight: 400; opacity: 0.6; margin-bottom: 10px; font-size: 0.7rem;">THE RPRMD LEADERSHIP SUMMIT</p>
         <h1>TEQUILA DISCO</h1>
-        <p class="sub-header">A Fresh Start • A Stronger Team</p>
+        <p class="sub-header">Salud to a New Chapter</p>
         
         <div id="countdown">00d : 00h : 00m : 00s</div>
 
         <div class="nav-container">
             <a href="https://maps.app.goo.gl/homsvxc3jUXfDpSQA" class="card" target="_blank">
-                <h3 style="color: var(--neon-green);">THE VENUE</h3>
-                <p style="font-size: 0.8rem; opacity: 0.6;">Santiago's Resort: The coordinate for elite collaboration.</p>
+                <h2>The Venue</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">Santiago's Resort: Coordinates secured for elite collaboration and agave spirits.</p>
+                <div style="color: var(--lime-neon); margin-top: 20px; font-size: 0.7rem; letter-spacing: 2px; font-weight: 900;">VIEW MAP</div>
             </a>
 
             <a href="https://teambuilding.rprmd9.site/home" class="card" target="_blank">
-                <h3 style="color: var(--neon-green);">THE MISSION</h3>
-                <p style="font-size: 0.8rem; opacity: 0.6;">Access the tactical itinerary and session schedules.</p>
+                <h2>The Mission</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7; line-height: 1.6;">Access the tactical itinerary, schedule of events, and team objectives.</p>
+                <div style="color: var(--lime-neon); margin-top: 20px; font-size: 0.7rem; letter-spacing: 2px; font-weight: 900;">OPEN INTEL</div>
             </a>
         </div>
 
         <div class="attire-showcase">
-            <div class="attire-label">Dress Code: Tropical Disco Rock</div>
-            <img src="Santiago's Resort.jpg" alt="Attire Guide" class="attire-img">
+            <div class="attire-label">Dress Code: Tropical Disco Elite</div>
+            <img src="Santiago's Resort.jpg" alt="Dress Code Visual" class="attire-img">
         </div>
 
-        <p style="margin-top: 60px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 4px;">SALT • LIME • LEADERSHIP</p>
+        <p style="margin-top: 80px; opacity: 0.3; font-size: 0.6rem; letter-spacing: 6px;">SALT • LIME • LEADERSHIP • 2026</p>
     </div>
 
     <script>
         const music = document.getElementById("bg-music");
         let hasStarted = false;
 
-        function shotSplash(e) {
-            // Start audio on first click
+        function spawnSplash(e) {
+            // Audio Trigger
             if (!hasStarted) {
-                music.play();
+                music.play().catch(() => {});
                 hasStarted = true;
             }
 
-            // Create Tequila Particles (Limes & Sparkles)
-            const icons = ['🍋', '✨', '🟢', '🧊'];
-            for(let i = 0; i < 6; i++) {
+            // Splash Effect
+            const icons = ['🍋', '🧂', '✨', '🟢'];
+            for(let i = 0; i < 8; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
@@ -227,24 +223,19 @@
                 
                 const angle = Math.random() * Math.PI * 2;
                 const velocity = 4 + Math.random() * 6;
-                let x = 0;
-                let y = 0;
+                let x = 0, y = 0;
 
                 const anim = setInterval(() => {
                     x += Math.cos(angle) * velocity;
-                    y += Math.sin(angle) * velocity + 2; // gravity effect
-                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
-                    p.style.opacity = p.style.opacity ? p.style.opacity - 0.03 : 1;
-                    
-                    if(p.style.opacity <= 0) {
-                        clearInterval(anim);
-                        p.remove();
-                    }
+                    y += Math.sin(angle) * velocity + 2; 
+                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x*2}deg)`;
+                    p.style.opacity = p.style.opacity ? p.style.opacity - 0.04 : 1;
+                    if(p.style.opacity <= 0) { clearInterval(anim); p.remove(); }
                 }, 16);
             }
         }
 
-        // Precise Countdown Logic
+        // Precise Countdown
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -253,7 +244,7 @@
             const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((gap % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerHTML = gap > 0 ? `${d}d : ${h}h : ${m}m : ${s}s` : "THE PARTY HAS STARTED";
+            document.getElementById("countdown").innerHTML = gap > 0 ? `${d}d : ${h}h : ${m}m : ${s}s` : "SALUD! PARTY STARTED";
         }, 1000);
     </script>
 </body>
