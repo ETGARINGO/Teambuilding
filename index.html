@@ -14,8 +14,8 @@
             --glass-white: rgba(255, 255, 255, 0.85);
         }
 
+        /* All previous styles remain exactly the same */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
             color: #444;
@@ -24,49 +24,14 @@
             min-height: 100vh;
         }
 
-        .bg-deco {
-            position: fixed;
-            z-index: -1;
-            opacity: 0.4;
-            pointer-events: none;
-            animation: float 8s ease-in-out infinite;
-        }
+        .bg-deco { position: fixed; z-index: -1; opacity: 0.4; pointer-events: none; animation: float 8s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(15deg); } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(15deg); }
-        }
+        .container { display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
+        .title-block { margin-bottom: 20px; }
+        h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.5rem, 8vw, 4rem); color: white; text-transform: uppercase; line-height: 1; text-shadow: 2px 4px 10px rgba(214, 52, 71, 0.3); letter-spacing: -1px; }
+        .program-text { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--deep-red); margin-top: -10px; }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .title-block {
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            color: white;
-            text-transform: uppercase;
-            line-height: 1;
-            text-shadow: 2px 4px 10px rgba(214, 52, 71, 0.3);
-            letter-spacing: -1px;
-        }
-
-        .program-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: var(--deep-red);
-            margin-top: -10px;
-        }
-
-        /* Countdown positioned directly under Title */
         #countdown {
             background: var(--glass-white);
             backdrop-filter: blur(10px);
@@ -81,95 +46,48 @@
             display: inline-block;
         }
 
-        /* Flyer frames container */
-        .gallery {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .flyer-frame {
-            position: relative;
-            background: white;
-            padding: 10px;
-            border-radius: 2px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
-        }
-
-        /* Top image (Resort) gets a slight different tilt for variety */
+        .gallery { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
+        .flyer-frame { position: relative; background: white; padding: 10px; border-radius: 2px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); transition: transform 0.3s ease; }
         .frame-top { transform: rotate(1deg); z-index: 2; }
         .frame-bottom { transform: rotate(-1.5deg); margin-top: -20px; }
-
         .flyer-frame:hover { transform: rotate(0deg) scale(1.02); z-index: 10; }
+        .flyer-img { width: 100%; height: auto; display: block; border: 1px solid #eee; }
 
-        .flyer-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border: 1px solid #eee;
-        }
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 900px; }
+        .nav-card { background: var(--glass-white); padding: 30px; border-radius: 20px; text-decoration: none; color: inherit; border: 1px solid white; transition: 0.3s; }
+        .nav-card:hover { background: white; transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255, 107, 157, 0.2); }
+        .nav-card h3 { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
 
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .nav-card {
-            background: var(--glass-white);
-            padding: 30px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: inherit;
-            border: 1px solid white;
-            transition: 0.3s;
-        }
-
-        .nav-card:hover {
-            background: white;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(255, 107, 157, 0.2);
-        }
-
-        .nav-card h3 {
-            color: var(--accent-orange);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .rsvp-btn {
+        /* MUSIC CONTROLS */
+        .music-toggle {
             position: fixed;
             bottom: 30px;
-            right: 30px;
-            background: var(--deep-red);
-            color: white;
-            padding: 18px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 900;
-            box-shadow: 0 10px 25px rgba(214, 52, 71, 0.4);
-            z-index: 100;
+            left: 30px;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 1.5rem;
+            border: none;
         }
 
-        .particle {
-            position: absolute;
-            pointer-events: none;
-            z-index: 999;
-            font-size: 24px;
-        }
+        .rsvp-btn { position: fixed; bottom: 30px; right: 30px; background: var(--deep-red); color: white; padding: 18px 30px; border-radius: 50px; text-decoration: none; font-weight: 900; box-shadow: 0 10px 25px rgba(214, 52, 71, 0.4); z-index: 100; display: flex; align-items: center; gap: 10px; }
+        .particle { position: absolute; pointer-events: none; z-index: 999; font-size: 24px; }
     </style>
 </head>
-<body onclick="createSplash(event)">
+<body onclick="initEffects(event)">
+
+    <audio id="bg-music" loop>
+        <source src="Audio intru.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-toggle" onclick="toggleMusic(event)" id="music-btn">🔈</button>
 
     <div class="bg-deco" style="top: 10%; left: 5%; font-size: 5rem;">🌺</div>
     <div class="bg-deco" style="bottom: 15%; left: 10%; font-size: 4rem;">🍊</div>
@@ -186,12 +104,11 @@
 
         <div class="gallery">
             <div class="flyer-frame frame-top">
-                <img src="Santiago's Resort.jpg" alt="Santiago's Resort Top View" class="flyer-img">
+                <img src="Santiago's Resort.jpg" alt="Santiago's Resort" class="flyer-img">
                 <div style="background: white; padding: 5px; font-size: 10px; font-weight: bold;">SANTIAGO'S RESORT - MAIN VENUE</div>
             </div>
-
             <div class="flyer-frame frame-bottom">
-                <img src="program.jfif" alt="RPRMD Team Building Flyer" class="flyer-img">
+                <img src="image_72b455.jpg" alt="RPRMD Team Building Flyer" class="flyer-img">
             </div>
         </div>
 
@@ -207,15 +124,39 @@
                 <p style="margin-top:15px; font-weight:900; color:var(--deep-red)">READ MORE →</p>
             </a>
         </div>
-
         <p style="margin-top: 60px; font-weight: 900; color: white; letter-spacing: 8px; opacity: 0.7;">PARTY... PARTY... PARTY</p>
     </div>
 
     <a href="https://teambuilding.rprmd9.site/reg" class="rsvp-btn">
-        <span style="font-size: 1.4rem;">📱</span> RSVP
+        <span style="font-size: 1.4rem;">📱</span> REGISTER NOW
     </a>
 
     <script>
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        let musicStarted = false;
+
+        function initEffects(e) {
+            // Start music on first click anywhere
+            if (!musicStarted) {
+                audio.play();
+                musicBtn.innerText = "🔊";
+                musicStarted = true;
+            }
+            createSplash(e);
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation(); // Prevents splash effect when clicking button
+            if (audio.paused) {
+                audio.play();
+                musicBtn.innerText = "🔊";
+            } else {
+                audio.pause();
+                musicBtn.innerText = "🔈";
+            }
+        }
+
         function createSplash(e) {
             const icons = ['🌸', '🍋', '🍹', '✨', '🍊'];
             for(let i = 0; i < 6; i++) {
@@ -240,6 +181,7 @@
             }
         }
 
+        // Countdown Timer
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
