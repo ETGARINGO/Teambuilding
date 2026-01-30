@@ -4,83 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPRMD | Tequila Disco 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600&family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&family=Monoton&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #0a0a0a;
+            background-color: #050505;
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: crosshair;
-            /* Animated Disco Background */
-            background: linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a0a1a);
-            animation: discoBg 4s infinite alternate;
+            cursor: pointer;
         }
 
-        @keyframes discoBg {
-            0% { background-color: #0a0a0a; }
-            50% { background-color: #1a0033; }
-            100% { background-color: #33001a; }
-        }
-
-        /* Video Background with Neon Glow */
-        #video-bg {
+        /* Animated Team Building Background */
+        .disco-bg {
             position: fixed;
-            right: 0; bottom: 0;
-            min-width: 100%; min-height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
-            object-fit: cover;
-            filter: brightness(0.5) contrast(1.2) saturate(1.5);
-            opacity: 0.6;
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Neon Shapes */
+        .shape {
+            position: absolute;
+            background: rgba(255, 0, 222, 0.2);
+            filter: blur(50px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: float 15s infinite alternate;
+        }
+
+        @keyframes float {
+            from { transform: translate(0, 0); }
+            to { transform: translate(100px, 100px); }
         }
 
         .overlay {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: radial-gradient(circle, rgba(255,0,255,0.1) 0%, rgba(0,0,0,0.9) 100%);
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
-        /* Tequila Neon Text Effect */
         h1 {
-            font-family: 'Monoton', cursive; /* Retro Disco Font */
-            font-size: clamp(2rem, 6vw, 4.5rem);
-            margin-bottom: 10px;
+            font-family: 'Monoton', cursive;
+            font-size: clamp(2.5rem, 8vw, 5rem);
             color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #ff00de,
-                0 0 40px #ff00de,
-                0 0 80px #ff00de;
-            animation: flicker 1.5s infinite alternate;
-            text-transform: uppercase;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de;
+            margin-bottom: 20px;
         }
 
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de;
-            }
-            20%, 24%, 55% { text-shadow: none; }
-        }
-
-        #countdown {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.2rem, 4vw, 2.5rem);
-            margin: 30px 0;
-            color: #00f2ff;
-            text-shadow: 0 0 10px #00f2ff;
-            border-top: 2px solid #ff00de;
-            border-bottom: 2px solid #ff00de;
-            padding: 15px 30px;
-            display: inline-block;
-            background: rgba(0,0,0,0.5);
+        /* Embedded Map Styling */
+        .map-container {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 40px 0;
+            border: 4px solid #00f2ff;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
         }
 
         .nav-container {
@@ -88,153 +81,120 @@
             gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 1000px;
-            perspective: 1000px;
+            width: 100%;
         }
 
-        /* Card Disco Flip */
         .card {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 222, 0.3);
-            padding: 40px 30px;
-            width: 320px;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            width: 350px;
+            border-radius: 20px;
+            transition: 0.3s;
             text-decoration: none;
             color: white;
-            display: block;
-            box-shadow: 0 0 15px rgba(255, 0, 222, 0.2);
         }
 
         .card:hover {
-            transform: scale(1.05) rotateX(10deg);
-            border-color: #00f2ff;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+            border-color: #ff00de;
+            box-shadow: 0 0 20px rgba(255, 0, 222, 0.5);
         }
 
-        .btn-luxury { 
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border: 2px solid #00f2ff;
+        /* Lime/Confetti Particle */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            font-size: 20px;
+            z-index: 100;
+        }
+
+        #countdown {
+            font-size: 2rem;
             color: #00f2ff;
-            padding: 10px 20px;
-            margin-top: 15px;
-            display: inline-block;
-            transition: 0.3s;
-        }
-
-        .card:hover .btn-luxury {
-            background: #00f2ff;
-            color: #000;
-        }
-
-        .attire-img {
-            max-width: 220px;
-            border: 3px solid #ff00de;
-            margin-top: 40px;
-            box-shadow: 0 0 20px #ff00de;
-            filter: hue-rotate(45deg);
-            transition: 0.5s;
-        }
-
-        .attire-img:hover {
-            filter: hue-rotate(360deg);
-        }
-
-        /* Music Visualizer Simulation */
-        .bars {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            height: 30px;
-            margin-bottom: 20px;
-        }
-        .bar {
-            width: 5px;
-            background: #ff00de;
-            animation: bounce 0.5s infinite alternate;
-        }
-        @keyframes bounce {
-            from { height: 5px; }
-            to { height: 30px; }
+            text-shadow: 0 0 10px #00f2ff;
+            margin: 20px 0;
         }
     </style>
 </head>
-<body onclick="startAudio()">
+<body onclick="spawnConfetti(event)">
 
-    <audio id="bg-music" loop>
-        <source src="Audio intru.mp3" type="audio/mpeg">
-    </audio>
-
-    <video autoplay muted loop id="video-bg" playsinline>
-        <source src="Audio intru.mp3" type="video/mp4">
-    </video>
+    <div class="disco-bg"></div>
+    <div class="shape" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
+    <div class="shape" style="width: 400px; height: 400px; bottom: 10%; right: 10%; background: rgba(0, 242, 255, 0.1);"></div>
 
     <div class="overlay">
-        <div class="bars">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
-            <div class="bar" style="animation-delay: 0.1s"></div>
-        </div>
-
-        <p style="letter-spacing: 6px; font-weight: bold; color: #00f2ff; margin-bottom: 15px;">THE GRAND ENTRANCE</p>
+        <p style="letter-spacing: 10px; color: #ff00de;">MISSION: TEAM BUILDING</p>
         <h1>TEQUILA DISCO</h1>
-        <p style="opacity: 0.8; font-style: italic;">A Fresh Start for a Stronger RPRMD</p>
         
-        <div id="countdown">Initializing Mission...</div>
+        <div id="countdown">00d : 00h : 00m : 00s</div>
+
+        <div class="map-container">
+            <iframe 
+                width="100%" 
+                height="100%" 
+                frameborder="0" 
+                style="border:0" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.789146142109!2d124.2389!3d7.917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNTUnMDEuMiJOIDEyNMKwMTQnMjAuMCJF!5e0!3m2!1sen!2sph!4v1700000000000" 
+                allowfullscreen>
+            </iframe>
+        </div>
 
         <div class="nav-container">
-            <a href="https://maps.app.goo.gl/homsvxc3jUXfDpSQA" class="card" target="_blank">
-                <h2 style="font-family: 'Playfair Display'; color: #ff00de;">The Venue</h2>
-                <p style="font-size: 0.8rem; opacity: 0.8;">Join the elite at the neon-soaked destination.</p>
-                <div class="btn-luxury">Locate Party</div>
+            <a href="https://teambuilding.rprmd9.site/home" class="card">
+                <h2 style="color: #00f2ff; margin-bottom: 10px;">The Itinerary</h2>
+                <p>Click to view the tactical mission schedule and activities.</p>
             </a>
-
-            <a href="https://teambuilding.rprmd9.site/home" class="card" target="_blank">
-                <h2 style="font-family: 'Playfair Display'; color: #00f2ff;">The Mission</h2>
-                <p style="font-size: 0.8rem; opacity: 0.8;">Full itinerary of tactical celebrations.</p>
-                <div class="btn-luxury">Enter Dossier</div>
-            </a>
+            <div class="card">
+                <h2 style="color: #ff00de; margin-bottom: 10px;">Dress Code</h2>
+                <p>Tropical Disco: Think neon colors, sequins, and shades.</p>
+            </div>
         </div>
-
-        <img src="Santiago's Resort.jpg" alt="Attire Guide" class="attire-img">
     </div>
 
     <script>
-        const music = document.getElementById("bg-music");
-        let hasStarted = false;
+        // Confetti / Lime Shower Effect
+        function spawnConfetti(e) {
+            const icons = ['🍋', '✨', '🍹', '💎', '🟢'];
+            for(let i = 0; i < 8; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                
+                document.body.appendChild(p);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 5 + Math.random() * 5;
+                let x = 0;
+                let y = 0;
 
-        function startAudio() {
-            if (!hasStarted) {
-                music.play().then(() => {
-                    hasStarted = true;
-                    // Flash the background when music starts
-                    document.body.style.animation = "discoBg 0.5s infinite alternate";
-                }).catch(err => console.log("Interaction needed"));
+                const anim = setInterval(() => {
+                    x += Math.cos(angle) * velocity;
+                    y += Math.sin(angle) * velocity + 2; // gravity
+                    p.style.transform = `translate(${x}px, ${y}px) rotate(${x}deg)`;
+                    p.style.opacity = p.style.opacity ? p.style.opacity - 0.05 : 1;
+                    
+                    if(p.style.opacity <= 0) {
+                        clearInterval(anim);
+                        p.remove();
+                    }
+                }, 16);
             }
         }
 
+        // Countdown Logic
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
-        
         setInterval(() => {
             const now = new Date().getTime();
             const gap = eventDate - now;
-
             const d = Math.floor(gap / (1000 * 60 * 60 * 24));
             const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((gap % (1000 * 60)) / 1000);
-
-            if (gap > 0) {
-                document.getElementById("countdown").innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
-            } else {
-                document.getElementById("countdown").innerHTML = "LET'S GET LOUD";
-                document.getElementById("countdown").style.color = "#ff00de";
-            }
+            document.getElementById("countdown").innerHTML = `${d}d : ${h}h : ${m}m : ${s}s`;
         }, 1000);
     </script>
 </body>
