@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPRMD | Team Building 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>RPRMD | Tequila Disco 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;600&family=Monoton&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -13,17 +13,27 @@
             color: #f4f4f4;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: pointer;
+            cursor: crosshair;
+            /* Animated Disco Background */
+            background: linear-gradient(45deg, #0a0a0a, #1a0a1a, #0a0a1a);
+            animation: discoBg 4s infinite alternate;
         }
 
-        /* Video Background */
+        @keyframes discoBg {
+            0% { background-color: #0a0a0a; }
+            50% { background-color: #1a0033; }
+            100% { background-color: #33001a; }
+        }
+
+        /* Video Background with Neon Glow */
         #video-bg {
             position: fixed;
             right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
             z-index: -2;
             object-fit: cover;
-            filter: brightness(0.3) contrast(1.1);
+            filter: brightness(0.5) contrast(1.2) saturate(1.5);
+            opacity: 0.6;
         }
 
         .overlay {
@@ -32,31 +42,45 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, rgba(255,0,255,0.1) 0%, rgba(0,0,0,0.9) 100%);
             padding: 40px 20px;
             text-align: center;
         }
 
+        /* Tequila Neon Text Effect */
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
-            letter-spacing: 2px;
+            font-family: 'Monoton', cursive; /* Retro Disco Font */
+            font-size: clamp(2rem, 6vw, 4.5rem);
             margin-bottom: 10px;
-            background: linear-gradient(to bottom, #ffffff 30%, #d4af37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #ff00de,
+                0 0 40px #ff00de,
+                0 0 80px #ff00de;
+            animation: flicker 1.5s infinite alternate;
             text-transform: uppercase;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00de, 0 0 40px #ff00de;
+            }
+            20%, 24%, 55% { text-shadow: none; }
         }
 
         #countdown {
             font-family: 'Playfair Display', serif;
             font-size: clamp(1.2rem, 4vw, 2.5rem);
             margin: 30px 0;
-            color: #d4af37;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            color: #00f2ff;
+            text-shadow: 0 0 10px #00f2ff;
+            border-top: 2px solid #ff00de;
+            border-bottom: 2px solid #ff00de;
             padding: 15px 30px;
             display: inline-block;
+            background: rgba(0,0,0,0.5);
         }
 
         .nav-container {
@@ -65,43 +89,76 @@
             flex-wrap: wrap;
             justify-content: center;
             max-width: 1000px;
+            perspective: 1000px;
         }
 
+        /* Card Disco Flip */
         .card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 222, 0.3);
             padding: 40px 30px;
             width: 320px;
-            transition: 0.4s ease;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
             color: white;
             display: block;
+            box-shadow: 0 0 15px rgba(255, 0, 222, 0.2);
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: #d4af37;
-            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.05) rotateX(10deg);
+            border-color: #00f2ff;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-luxury { 
-            font-size: 0.7rem;
+            font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
-            border: 1px solid #d4af37;
-            color: #d4af37;
+            border: 2px solid #00f2ff;
+            color: #00f2ff;
             padding: 10px 20px;
             margin-top: 15px;
             display: inline-block;
+            transition: 0.3s;
+        }
+
+        .card:hover .btn-luxury {
+            background: #00f2ff;
+            color: #000;
         }
 
         .attire-img {
-            max-width: 180px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            max-width: 220px;
+            border: 3px solid #ff00de;
             margin-top: 40px;
-            opacity: 0.8;
+            box-shadow: 0 0 20px #ff00de;
+            filter: hue-rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .attire-img:hover {
+            filter: hue-rotate(360deg);
+        }
+
+        /* Music Visualizer Simulation */
+        .bars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        .bar {
+            width: 5px;
+            background: #ff00de;
+            animation: bounce 0.5s infinite alternate;
+        }
+        @keyframes bounce {
+            from { height: 5px; }
+            to { height: 30px; }
         }
     </style>
 </head>
@@ -116,22 +173,31 @@
     </video>
 
     <div class="overlay">
-        <p style="letter-spacing: 4px; font-size: 0.75rem; opacity: 0.6; margin-bottom: 15px;">You are cordially invited to</p>
-        <h1>A Fresh Start for a Stronger RPRMD</h1>
+        <div class="bars">
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+            <div class="bar" style="animation-delay: 0.1s"></div>
+        </div>
+
+        <p style="letter-spacing: 6px; font-weight: bold; color: #00f2ff; margin-bottom: 15px;">THE GRAND ENTRANCE</p>
+        <h1>TEQUILA DISCO</h1>
+        <p style="opacity: 0.8; font-style: italic;">A Fresh Start for a Stronger RPRMD</p>
         
-        <div id="countdown">Initializing...</div>
+        <div id="countdown">Initializing Mission...</div>
 
         <div class="nav-container">
             <a href="https://maps.app.goo.gl/homsvxc3jUXfDpSQA" class="card" target="_blank">
-                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Venue</h2>
-                <p style="font-size: 0.8rem; opacity: 0.6; line-height: 1.6;">Navigate to the location selected for elite team collaboration.</p>
-                <div class="btn-luxury">View Map</div>
+                <h2 style="font-family: 'Playfair Display'; color: #ff00de;">The Venue</h2>
+                <p style="font-size: 0.8rem; opacity: 0.8;">Join the elite at the neon-soaked destination.</p>
+                <div class="btn-luxury">Locate Party</div>
             </a>
 
             <a href="https://teambuilding.rprmd9.site/home" class="card" target="_blank">
-                <h2 style="font-family: 'Playfair Display'; margin-bottom: 10px;">The Itinerary</h2>
-                <p style="font-size: 0.8rem; opacity: 0.6; line-height: 1.6;">Access the full mission sequence and tactical schedules.</p>
-                <div class="btn-luxury">Open Itinerary</div>
+                <h2 style="font-family: 'Playfair Display'; color: #00f2ff;">The Mission</h2>
+                <p style="font-size: 0.8rem; opacity: 0.8;">Full itinerary of tactical celebrations.</p>
+                <div class="btn-luxury">Enter Dossier</div>
             </a>
         </div>
 
@@ -142,18 +208,16 @@
         const music = document.getElementById("bg-music");
         let hasStarted = false;
 
-        // Function to handle the auto-play on first user interaction
         function startAudio() {
             if (!hasStarted) {
                 music.play().then(() => {
                     hasStarted = true;
-                }).catch(err => {
-                    console.log("Audio waiting for stronger interaction.");
-                });
+                    // Flash the background when music starts
+                    document.body.style.animation = "discoBg 0.5s infinite alternate";
+                }).catch(err => console.log("Interaction needed"));
             }
         }
 
-        // Precise Countdown Logic
         const eventDate = new Date("January 31, 2026 08:00:00").getTime();
         
         setInterval(() => {
@@ -166,9 +230,10 @@
             const s = Math.floor((gap % (1000 * 60)) / 1000);
 
             if (gap > 0) {
-                document.getElementById("countdown").innerHTML = `${d}d : ${h}h : ${m}m : ${s}s`;
+                document.getElementById("countdown").innerHTML = `${d}D : ${h}H : ${m}M : ${s}S`;
             } else {
-                document.getElementById("countdown").innerHTML = "THE MISSION HAS COMMENCED";
+                document.getElementById("countdown").innerHTML = "LET'S GET LOUD";
+                document.getElementById("countdown").style.color = "#ff00de";
             }
         }, 1000);
     </script>
